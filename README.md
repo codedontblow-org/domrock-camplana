@@ -5,7 +5,6 @@
 <h2 align="center"> 💣 Code Don't Blow </h2>
 </div>
 
-<div align="center">
 
 <div align="center">
 
@@ -26,14 +25,18 @@
 
 </div>
 
-</div>
+---
 
 > Status do Projeto: Em andamento! 🚧 
 
-<br>
+---
 
 ## 🏁 Desafio: <a id="desafio"></a>
-O desafio propõe o desenvolvimento de um sistema para gerenciamento de regras de negócio, utilizando técnicas de Engenharia de Software Assistida por Inteligência Artificial. Empresas possuem regras de negócio que mudam constantemente devido a novos produtos, alterações de preços, campanhas de vendas e mudanças em acordos comerciais com parceiros e fornecedores. Entretanto, essas regras muitas vezes não são registradas ou organizadas adequadamente, dificultando sua utilização, manutenção e rastreabilidade. Nesse contexto, o sistema deverá permitir registrar, organizar, analisar e simular regras de negócio, reduzindo problemas como inconsistências operacionais, conflitos entre regras, dependência de conhecimento tácito e perda de rastreabilidade.      
+O desafio propõe o desenvolvimento de um sistema para gerenciamento de regras de negócio, utilizando técnicas de Engenharia de Software Assistida por Inteligência Artificial. 
+<br>
+Empresas possuem regras de negócio que mudam constantemente devido a novos produtos, alterações de preços, campanhas de vendas e mudanças em acordos comerciais com parceiros e fornecedores. Entretanto, essas regras muitas vezes não são registradas ou organizadas adequadamente, dificultando sua utilização, manutenção e rastreabilidade. 
+<br>
+Nesse contexto, o sistema deverá permitir registrar, organizar, analisar e simular regras de negócio, reduzindo problemas como inconsistências operacionais, conflitos entre regras, dependência de conhecimento tácito e perda de rastreabilidade.      
 
 
 
