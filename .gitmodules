@@ -1,12 +1,9 @@
-[submodule "DomRock-frontend"]
-	path = DomRock-frontend
-	url = https://github.com/CodeDontBlow/DomRock-frontend.git
-[submodule "DomRock-backend"]
-	path = DomRock-backend
-	url = https://github.com/CodeDontBlow/DomRock-backend.git
-[submodule "DomRock-iac"]
-	path = DomRock-iac
-	url = https://github.com/CodeDontBlow/DomRock-iac.git
-[submodule "DomRock-ml"]
-	path = DomRock-ml
-	url = https://github.com/CodeDontBlow/DomRock-ml.git
+[submodule "DomRock-Frontend"]
+	path = DomRock-Frontend
+	url = https://github.com/codedontblow-org/domrock-frontend.git
+[submodule "DomRock-Backend"]
+	path = DomRock-Backend
+	url = https://github.com/codedontblow-org/domrock-backend.git
+[submodule "DomRock-Lana"]
+	path = DomRock-Lana
+	url = https://github.com/codedontblow-org/domrock-lana.git
