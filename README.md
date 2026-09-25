@@ -152,17 +152,17 @@ O cronograma abaixo apresenta visualmente a evolução planejada das principais 
 <a id="tecnologias"></a>
 <div align="center">
 
-![Vue.js](https://img.shields.io/badge/vue.js-0b192c.svg?style=for-the-badge&logo=vuedotjs&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/spring_boot-0b192c.svg?style=for-the-badge&logo=springboot&logoColor=white)
-![Java](https://img.shields.io/badge/java-0b192c.svg?style=for-the-badge&logo=openjdk&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-3368A0?style=for-the-badge&logo=docker&logoColor=white)
-![Python](https://img.shields.io/badge/python-0b192c.svg?style=for-the-badge&logo=python&logoColor=white)
-![LangGraph](https://img.shields.io/badge/langgraph-1C3C3C?style=for-the-badge&logo=langgraph&logoColor=white)
-![OpenRouter](https://img.shields.io/badge/OpenRouter-67C090?style=for-the-badge&logo=openrouter&logoColor=white)
-![Gemini](https://img.shields.io/badge/Gemini-67C090?style=for-the-badge&logo=googlegemini&logoColor=white)
-![Jira](https://img.shields.io/badge/jira-0b192c.svg?style=for-the-badge&logo=jira&logoColor=white)
-![Figma](https://img.shields.io/badge/figma-0b192c.svg?style=for-the-badge&logo=figma&logoColor=white)
+![Vue.js](https://img.shields.io/badge/vue.js-00b4f1.svg?style=for-the-badge&logo=vuedotjs&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/spring_boot-00b4f1.svg?style=for-the-badge&logo=springboot&logoColor=white)
+![Java](https://img.shields.io/badge/java-00b4f1.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-00b4f1?style=for-the-badge&logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-00b4f1?style=for-the-badge&logo=docker&logoColor=white)
+![Python](https://img.shields.io/badge/python-00b4f1.svg?style=for-the-badge&logo=python&logoColor=white)
+![LangGraph](https://img.shields.io/badge/langgraph-00b4f1?style=for-the-badge&logo=langgraph&logoColor=white)
+![OpenRouter](https://img.shields.io/badge/OpenRouter-00b4f1?style=for-the-badge&logo=openrouter&logoColor=white)
+![Gemini](https://img.shields.io/badge/Gemini-00b4f1?style=for-the-badge&logo=googlegemini&logoColor=white)
+![Jira](https://img.shields.io/badge/jira-00b4f1.svg?style=for-the-badge&logo=jira&logoColor=white)
+![Figma](https://img.shields.io/badge/figma-00b4f1.svg?style=for-the-badge&logo=figma&logoColor=white)
 
 </div>
 
