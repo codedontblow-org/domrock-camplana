@@ -152,12 +152,23 @@ O cronograma abaixo apresenta visualmente a evolução planejada das principais 
 
 <a id="demo"></a>
 
+### • SPRINT 1
+https://github.com/user-attachments/assets/e0fafe44-9b95-4d7e-b080-081ebb5af7cb 
+
+### • SPRINT 2
+> Em breve!
+### • SPRINT 3
+> Em breve!
+
+<!--
 | Sprint   | Entregas | Vídeo do incremento |
 | -------- | -------- | ------------------- |
 | Sprint 1 | 🚧       | 🚧                  |
 | Sprint 2 | 🚧       | 🚧                  |
 | Sprint 3 | 🚧       | 🚧                  |
-
+ --->
+ ---
+ 
 ## 🛠️ Tecnologias
 
 <a id="tecnologias"></a>
