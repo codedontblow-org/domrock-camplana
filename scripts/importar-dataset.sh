@@ -13,6 +13,17 @@ if [ ! -d "$DATASET" ]; then
   exit 1
 fi
 
+# O backend cria as tabelas (Flyway) ao subir; espera até 2 min para ele responder.
+echo "Aguardando o backend em $BACKEND..."
+for _ in $(seq 1 60); do
+  curl --silent --fail "$BACKEND/actuator/health" > /dev/null && break
+  sleep 2
+done
+if ! curl --silent --fail "$BACKEND/actuator/health" > /dev/null; then
+  echo "Backend não respondeu em $BACKEND/actuator/health; confira 'docker compose logs backend'." >&2
+  exit 1
+fi
+
 for mes in "${MESES[@]}"; do
   echo "Importando $mes..."
   curl --fail --silent --show-error -X POST "$BACKEND/api/importacao" \

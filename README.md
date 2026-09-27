@@ -268,7 +268,7 @@ docker compose up -d --build
 ./scripts/importar-dataset.sh
 ```
 
-O script envia RH, vendas e % de comissão de jul a dez/2025 para `POST /api/importacao`. Se trocou a porta do backend, passe o endereço: `./scripts/importar-dataset.sh http://localhost:8081`. No Windows, rode pelo Git Bash ou WSL.
+Pode rodar logo depois do `docker compose up`: o script espera o backend terminar de subir e então envia RH, vendas e % de comissão de jul a dez/2025 para `POST /api/importacao` (leva cerca de 2 minutos). Os dados ficam no volume do Postgres, então não é preciso importar de novo ao reiniciar os containers. Se trocou a porta do backend, passe o endereço: `./scripts/importar-dataset.sh http://localhost:8081`. No Windows, rode pelo Git Bash ou WSL.
 
 ### 5. Acessar
 
