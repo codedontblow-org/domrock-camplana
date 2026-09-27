@@ -14,7 +14,7 @@
 
 ## 2. Mock JSON
 
-\`\`\`json
+json
 {
   "rule_id": "draft-bf-2025-11",
   "tipo_regra": "BONUS_TEMPORARIO",
@@ -89,4 +89,3 @@
     }
   ]
 }
-\`\`\`
