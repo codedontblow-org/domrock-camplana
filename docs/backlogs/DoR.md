@@ -1,12 +1,30 @@
-## :bomb: DoR - Definition of Ready <a id="dor"></a>
+# Definition of Ready (DoR)
 
-Uma história está pronta para entrar em desenvolvimento quando:
+Uma tarefa é considerada **Ready** quando possui informações suficientes para ser iniciada pelo time de desenvolvimento.
 
-- [ ] A história possui identificador único.
-- [ ] O objetivo está claramente descrito.
-- [ ] Os critérios de aceitação estão definidos.
-- [ ] A regra de negócio está compreendida.
+## Checklist
+
+Antes de iniciar uma tarefa, verificar:
+
+- [ ] A tarefa possui uma descrição clara.
+- [ ] O objetivo da tarefa está definido.
+- [ ] Os critérios de aceite estão documentados.
+- [ ] As regras de negócio necessárias foram identificadas.
 - [ ] As dependências foram identificadas.
-- [ ] As dúvidas relevantes foram esclarecidas.
-- [ ] O Product Owner validou o escopo.
-- [ ] A equipe possui informações suficientes para iniciar o desenvolvimento.
+- [ ] O responsável pela tarefa está definido.
+- [ ] O escopo está suficientemente claro.
+- [ ] Existem informações suficientes para estimar a tarefa.
+- [ ] Eventuais layouts, protótipos ou referências estão disponíveis.
+
+## Exemplo
+
+**Tarefa:** Criar tela de login.
+
+**Critérios de aceite:**
+
+- Usuário deve informar e-mail e senha.
+- O sistema deve validar os campos obrigatórios.
+- Credenciais inválidas devem apresentar uma mensagem de erro.
+- Credenciais válidas devem redirecionar o usuário para a página inicial.
+
+Quando todos os itens necessários estiverem definidos, a tarefa poderá ser considerada **Ready**.
