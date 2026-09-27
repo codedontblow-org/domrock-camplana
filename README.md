@@ -140,16 +140,9 @@ O cronograma abaixo apresenta visualmente a evolução planejada das principais 
 <div align="center"> 
 <table>
   <tr>
-<th> <img src = ""> </th>
-<th> <img src = ""> </th>
-<th> <img src = ""> </th>
-<th> <img src = ""> </th>
-</tr> <tr>
-<td> <img src = ""></td>
-<td> <img src =""> </td>
-<td> <img src = ""> </td>
-<td> <img src = ""> </td>
-  </tr>
+<th> <img src = "docs\prototipo\tela-1.png"> </th>
+<th> <img src = "docs\prototipo\tela-2.png"> </th>
+</tr> 
 </table> 
 </div>
 
