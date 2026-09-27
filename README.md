@@ -133,6 +133,8 @@ Uma história é considerada concluída quando:
 
 O cronograma abaixo apresenta visualmente a evolução planejada das principais entregas.
 
+<img src = "assets\Roadmap.png"> 
+
 ---
 
 ## 📋 Protótipo da Aplicação <a id="prototipo"></a>
