@@ -10,8 +10,8 @@
 <a href="#desafio">Desafio</a> |
 <a href="#mvp">Solução</a> |
 <a href="#backlog">Backlog do Produto</a> |
-<a href="#dor">DoR</a> |
-<a href="#dod">DoD</a> |
+<!-- <a href="#dor">DoR</a> |
+<a href="#dod">DoD</a> | -->
 <a href="#sprint">Cronograma de Sprints</a> |
 <a href="#roadmap">Roadmap de Entregas</a> |
 <a href="#prototipo">Protótipo</a> |
@@ -83,6 +83,7 @@ A simulação é um _backtest_: aplica a regra sobre vendas que já aconteceram 
 
 **Perfis:** o **Gerente de Vendas** cria regras e solicita mudanças; o **Supervisor de Vendas** cria e aprova regras e mudanças; o **Administrador** apenas gerencia usuários, sem acesso a simulações, edições ou aprovações.
 
+<!--
 ## :bomb: DoR - Definition of Ready <a id="dor"></a>
 
 Uma história está pronta para entrar em desenvolvimento quando:
@@ -110,6 +111,7 @@ Uma história é considerada concluída quando:
 - [ ] Documentação atualizada quando necessário.
 - [ ] Pull Request aprovado.
 - [ ] Código integrado à branch principal.
+-->
 
 ---
 
@@ -248,7 +250,6 @@ cp .env.example .env
 | `AI_PROVIDER` | `GEMINI` | `GEMINI` ou `OPENROUTER` |
 | `AI_MODEL` | `gemini-3.5-flash-lite` | Modelo usado pela Lana |
 | `GEMINI_API_KEY` | `...` | Chave do provedor escolhido |
-| `CODEGEN_MODO` | `llm` | `llm` gera o código com IA; `modelo` usa o código fixo (plano B) |
 | `OPENROUTER_API_KEY` / `GROQ_API_KEY` | `...` | Chaves dos provedores de reserva (opcionais) |
 | `AI_FALLBACKS` | `GEMINI:gemini-3.1-flash-lite,GROQ:openai/gpt-oss-120b` | Reserva em ordem se o principal falhar (cota 429, fora do ar). Provedor sem chave é ignorado |
 | `AI_TIMEOUT_S` | `30` | Segundos por modelo antes de passar ao próximo |
@@ -292,8 +293,6 @@ Com valor conferido em SQL (o custo pode variar alguns centavos pelo arredondame
 
 Sem meta ou orçamento no texto, a Lana pede os valores que faltam. Perguntas como _"Quanto a marca Azul vendeu em agosto de 2025?"_ são respondidas consultando o banco; pedidos fora do escopo (ex.: _"mostre todas as vendas com o nome de cada funcionário"_) são recusados.
 
-**Plano B:** com `CODEGEN_MODO=modelo` no `.env` e `docker compose up -d lana`, a simulação usa o código determinístico, sem depender da LLM.
-
 ### Testes
 
 ```bash
@@ -305,6 +304,7 @@ docker exec -w /app camplana-frontend sh -c "npx vue-tsc --build && npx vitest r
 cd DomRock-Backend && ./mvnw test
 ```
 
+<!--
 ### Limitações conhecidas (Sprint 1)
 
 - Simulação só sobre os meses da base (jul a dez/2025); mês futuro ainda não é aceito.
@@ -312,6 +312,7 @@ cd DomRock-Backend && ./mvnw test
 - A comissão sem a campanha ainda não aplica proporcional de admissão/demissão nem férias e afastamentos.
 - Sem autenticação, aprovação e persistência de regras e simulações; o histórico do chat fica em memória na Lana e some ao reiniciar o container.
 - O código gerado roda em subprocesso isolado (validação AST, builtins e imports restritos, sem variáveis de ambiente, limites de memória/CPU) dentro do container da Lana; um container efêmero sem rede é a evolução prevista.
+-->
 
 ---
 

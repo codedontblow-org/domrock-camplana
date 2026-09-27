@@ -60,7 +60,6 @@ services:
       # Reserva, em ordem, se o principal falhar (ex.: cota 429): PROVEDOR:modelo,...
       AI_FALLBACKS: ${AI_FALLBACKS:-}
       AI_TIMEOUT_S: ${AI_TIMEOUT_S:-30}
-      CODEGEN_MODO: ${CODEGEN_MODO:-llm}
       # A Lana lê o banco com o papel somente leitura, nunca com o superusuário.
       DATABASE_URL: postgresql://lana_leitura:${LANA_DB_PASSWORD:-lana_leitura}@postgres:5432/camplana
     ports:
