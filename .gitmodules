@@ -1,9 +1,12 @@
 [submodule "DomRock-Frontend"]
 	path = DomRock-Frontend
 	url = https://github.com/codedontblow-org/domrock-frontend.git
+	branch = feature/implementacao-do-fluxo-completo
 [submodule "DomRock-Backend"]
 	path = DomRock-Backend
 	url = https://github.com/codedontblow-org/domrock-backend.git
+	branch = feature/implementacao-do-fluxo-completo
 [submodule "DomRock-Lana"]
 	path = DomRock-Lana
 	url = https://github.com/codedontblow-org/domrock-lana.git
+	branch = feature/implementacao-do-fluxo-completo

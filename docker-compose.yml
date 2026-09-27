@@ -1,0 +1,90 @@
+# Ambiente completo do Camplana: PostgreSQL + backend (Spring) + Lana (FastAPI) + frontend (Vue).
+# Uso, na raiz deste repositório:
+#   git submodule update --init --remote   # baixa backend, frontend e Lana na branch do .gitmodules
+#   cp .env.example .env                    # preencha a IA (AI_PROVIDER, AI_MODEL e a chave)
+#   docker compose up -d --build
+#   ./scripts/importar-dataset.sh           # só na primeira vez: carrega jul-dez/2025 no banco
+# Portas do host trocáveis no .env (POSTGRES_HOST_PORT, BACKEND_HOST_PORT, LANA_HOST_PORT, FRONTEND_HOST_PORT).
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres-camplana
+    environment:
+      POSTGRES_DB: camplana
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    ports:
+      - "${POSTGRES_HOST_PORT:-5432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  backend:
+    build: ./DomRock-Backend
+    container_name: camplana-backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/camplana
+      DB_USERNAME: ${DB_USERNAME:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+      LANA_URL: http://lana:8000
+      # Senha do papel somente leitura lana_leitura, criado pela migração V3 do Flyway.
+      LANA_DB_PASSWORD: ${LANA_DB_PASSWORD:-lana_leitura}
+    ports:
+      - "${BACKEND_HOST_PORT:-8080}:8080"
+    restart: unless-stopped
+
+  lana:
+    build: ./DomRock-Lana
+    container_name: camplana-lana
+    depends_on:
+      postgres:
+        condition: service_healthy
+      # O papel lana_leitura é criado pelo Flyway quando o backend sobe.
+      backend:
+        condition: service_started
+    environment:
+      AI_PROVIDER: ${AI_PROVIDER:?defina AI_PROVIDER (GEMINI | OPENROUTER) no .env}
+      AI_MODEL: ${AI_MODEL:?defina AI_MODEL no .env}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      # Reserva, em ordem, se o principal falhar (ex.: cota 429): PROVEDOR:modelo,...
+      AI_FALLBACKS: ${AI_FALLBACKS:-}
+      AI_TIMEOUT_S: ${AI_TIMEOUT_S:-30}
+      CODEGEN_MODO: ${CODEGEN_MODO:-llm}
+      # A Lana lê o banco com o papel somente leitura, nunca com o superusuário.
+      DATABASE_URL: postgresql://lana_leitura:${LANA_DB_PASSWORD:-lana_leitura}@postgres:5432/camplana
+    ports:
+      - "${LANA_HOST_PORT:-8000}:8000"
+    volumes:
+      # Código montado: alterações na Lana recarregam sem rebuild (uvicorn --reload).
+      - ./DomRock-Lana:/app
+    restart: unless-stopped
+
+  frontend:
+    image: node:24-alpine
+    container_name: camplana-frontend
+    working_dir: /app
+    volumes:
+      - ./DomRock-Frontend:/app
+      # node_modules num volume próprio, para não misturar com o do host (Windows/Mac/Linux).
+      - frontend-node-modules:/app/node_modules
+    environment:
+      API_PROXY_TARGET: http://backend:8080
+    command: sh -c "npm ci && npx vite --host 0.0.0.0 --port 5173"
+    ports:
+      - "${FRONTEND_HOST_PORT:-5173}:5173"
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
+  frontend-node-modules:

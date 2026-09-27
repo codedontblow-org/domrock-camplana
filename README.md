@@ -1,833 +1,310 @@
-Sim — agora dá para deixar os documentos **bem específicos para o Camplana**, em vez daqueles exemplos genéricos.
+<h1 align="center"> API ADS 6º Semestre </h1>
 
-Inclusive, notei uma pequena inconsistência no README: a estrutura mostra `docs/DoR.md` e `docs/DoD.md`, enquanto o índice de documentação aponta para `docs/backlogs/DoR.md` e `docs/backlogs/DoD.md`. Eu usaria **`docs/backlogs/`**, porque deixa a organização mais clara.
+<div align="center">
+    <!--  <img src="" alt="DomRock_image" width="900"> -->
+<h2 align="center"> 💣 Code Don't Blow </h2>
+</div>
 
-Para o projeto de vocês, eu faria os documentos assim:
+<div align="center">
 
-## 1\. `docs/backlogs/DoR.md`
+<a href="#desafio">Desafio</a> |
+<a href="#mvp">Solução</a> |
+<a href="#backlog">Backlog do Produto</a> |
+<a href="#dor">DoR</a> |
+<a href="#dod">DoD</a> |
+<a href="#sprint">Cronograma de Sprints</a> |
+<a href="#roadmap">Roadmap de Entregas</a> |
+<a href="#prototipo">Protótipo</a> |
+<a href="#demo">Demonstração</a> |
+<a href="#tecnologias">Tecnologias</a> |
+<a href="#estrutura">Estrutura do Projeto</a> |
+<a href="#como-executar">Como Executar?</a> |
+<a href="#manual">Documentações</a> |
+<a href="#team">Equipe</a>
 
-Definition of Ready — Camplana
-
-# Definition of Ready (DoR)
-
-## Objetivo
-
-A Definition of Ready (DoR) estabelece os critérios mínimos para que uma User Story do Camplana esteja suficientemente especificada para ser iniciada pela equipe de desenvolvimento.
-
-Uma história somente poderá entrar em desenvolvimento quando os critérios abaixo forem atendidos.
-
-## Checklist
-
-### Identificação e objetivo
-
-- [ ] A User Story possui identificador único.
-- [ ] A User Story está descrita no formato adequado.
-- [ ] O objetivo da funcionalidade está claramente definido.
-- [ ] O perfil do usuário está identificado.
-- [ ] O resultado esperado está descrito.
-
-### Regras de negócio
-
-- [ ] As regras de negócio relacionadas à funcionalidade foram identificadas.
-- [ ] Os limites e condições da regra estão definidos.
-- [ ] Possíveis conflitos com regras existentes foram considerados.
-- [ ] O comportamento esperado da IA está definido quando aplicável.
-- [ ] As informações necessárias para a simulação estão disponíveis.
-
-### Critérios de aceitação
-
-- [ ] Os critérios de aceitação estão definidos.
-- [ ] Os cenários de sucesso estão descritos.
-- [ ] Os cenários de erro estão descritos quando aplicável.
-- [ ] Os dados necessários para validação estão definidos.
-
-### Dependências
-
-- [ ] Dependências com o backend foram identificadas.
-- [ ] Dependências com o frontend foram identificadas.
-- [ ] Dependências com o módulo de IA foram identificadas quando aplicável.
-- [ ] Dependências com banco de dados ou infraestrutura foram identificadas.
-- [ ] Eventuais bloqueios foram registrados.
-
-### Validação
-
-- [ ] As dúvidas relevantes foram esclarecidas.
-- [ ] O Product Owner validou o escopo.
-- [ ] A equipe possui informações suficientes para estimar e desenvolver a história.
-
-## Exemplo
-
-### User Story
-
-> Como Gerente de Vendas, quero falar uma regra em linguagem natural para o sistema interpretar e iniciar uma simulação da regra de negócio.
-
-### Critérios de aceitação
-
-- O usuário deve informar uma regra em linguagem natural.
-- O sistema deve identificar as informações relevantes da regra.
-- A IA deve consultar as regras existentes.
-- O sistema deve identificar possíveis conflitos.
-- O sistema deve apresentar uma explicação para o resultado da análise.
-- O usuário deve poder iniciar a simulação quando a regra estiver apta para simulação.
-
-### Exemplo de entrada
-
-> "Comissão de 8% para a Região Sul."
-
-### Exemplo de resultado esperado
-
-O sistema deve interpretar a intenção, consultar as regras existentes e apresentar uma resposta explicável indicando se a nova regra pode ser simulada e quais regras existentes foram consideradas.
-
-## Critério final
-
-Uma User Story será considerada **Ready** quando todos os critérios necessários estiverem definidos, as dúvidas relevantes estiverem resolvidas e o time possuir informações suficientes para iniciar o desenvolvimento.
+</div>
 
 ---
 
-## 2\. `docs/backlogs/DoD.md`
+> Status do Projeto: Em andamento! 🚧
 
-Aqui eu adaptaria bastante ao fluxo que vocês já definiram no README.
+---
 
-Definition of Done — Camplana
+## 🏁 Desafio: <a id="desafio"></a>
 
-# Definition of Done (DoD)
+O desafio propõe o desenvolvimento de um sistema para gerenciamento de regras de negócio, utilizando técnicas de Engenharia de Software Assistida por Inteligência Artificial.
+<br>
+Empresas possuem regras de negócio que mudam constantemente devido a novos produtos, alterações de preços, campanhas de vendas e mudanças em acordos comerciais com parceiros e fornecedores. Entretanto, essas regras muitas vezes não são registradas ou organizadas adequadamente, dificultando sua utilização, manutenção e rastreabilidade.
+<br>
+Nesse contexto, o sistema deverá permitir registrar, organizar, analisar e simular regras de negócio, reduzindo problemas como inconsistências operacionais, conflitos entre regras, dependência de conhecimento tácito e perda de rastreabilidade.
 
-## Objetivo
+## 🥇 Solução <a id="mvp"></a>
 
-A Definition of Done (DoD) define os critérios necessários para considerar uma User Story do Camplana concluída.
+Camplana é uma plataforma que usa IA Generativa explicável (a **Lana**) para planejar campanhas de comissionamento: o gerente descreve a regra em linguagem natural, revisa os parâmetros que a Lana extraiu e simula o impacto financeiro sobre os dados reais de vendas e RH da Dom Rock antes de levar a campanha adiante.
 
-A conclusão de uma história exige tanto a implementação quanto a validação técnica e funcional da entrega.
+**Nenhum número vem direto da LLM.** A Lana gera o código Python da regra, que roda isolado sobre os dados e é conferido contra um cálculo determinístico; a comissão sem a campanha (baseline) também é calculada por código.
 
-## Checklist
+### Fluxo do Usuário
 
-### Desenvolvimento
+1. **Regra em linguagem natural:** no chat, o gerente descreve a campanha.
+   <br>exemplo: _"Todas as vendas de 24/11/2025 a 30/11/2025 terão +1% de comissão (Black Friday), para todas as marcas e cargos, exceto gerentes (cargo 150)."_
+2. **Parâmetros revisáveis:** a Lana preenche o painel **Campanha** (período, acréscimo, marcas, cargos, meta e orçamento) e pede o que faltar, sem assumir valores. O gerente pode corrigir qualquer campo.
+3. **Simulação:** ao clicar em **Simular campanha**, a Lana gera o código da regra, executa sobre as vendas do período e confere o resultado.
+4. **Resultado explicável:** custo extra da campanha, se cabe no orçamento, pessoas impactadas, onde o custo pesa (marca, cargo, loja), cenários alternativos já simulados (ex.: o maior acréscimo que cabe no orçamento) e o código Python usado no cálculo.
 
-- [ ] A implementação da funcionalidade foi concluída.
-- [ ] O código segue os padrões definidos pelo projeto.
-- [ ] A funcionalidade está integrada aos componentes necessários.
-- [ ] Não existem erros conhecidos que impeçam a utilização da funcionalidade.
+A simulação é um _backtest_: aplica a regra sobre vendas que já aconteceram (jul a dez/2025) e compara com a comissão sem a campanha.
 
-### Testes
+---
 
-- [ ] Os testes necessários foram implementados ou atualizados.
-- [ ] Os testes foram executados com sucesso.
-- [ ] Os critérios de aceitação foram validados.
-- [ ] Os principais cenários de erro foram testados.
+## 🗒️ Backlog do Produto <a id="backlog"></a>
 
-### Inteligência Artificial
+| Rank | Prioridade |                                                                                                    User Story                                                                                                     | Sprint | Status |
+| :--: | :--------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----: | :----: |
+|  1   |    Alta    |                                    Como Gerente de Vendas, quero falar uma regra em linguagem natural para o sistema interpretar e iniciar uma simulação da regra de negócio.                                     |   1    |   🔒   |
+|  2   |    Alta    |                         Como Gerente de Vendas, quero rodar a simulação da regra com diferentes cenários de meta para ver o impacto financeiro projetado antes de enviar para aprovação.                          |   1    |   🔒   |
+|  3   |    Alta    | Como Supervisor de Vendas quero avaliar, aprovar ou reprovar regras de negócios criadas por outros usuários, para garantir que estejam alinhadas ao orçamento e aos objetivos da campanha antes serem executadas. |   2    |   🔒   |
+|  4   |    Alta    |                                                       Como Supervisor de Vendas, quero ver o status da minha regra, para acompanhar em que etapa ela está.                                                        |   2    |   🔒   |
+|  5   |    Alta    |                       Como Supervisor de Vendas, quero propor alterações nos dados da base de vendas, para corrigir alterações em campanhas sem comprometer a integridade das informações.                        |   2    |   🔒   |
+|  6   |    Alta    |                               Como Supervisor de Vendas, quero poder visualizar os logs de edições e aprovações, para acompanhar o histórico de mudanças e garantir rastreabilidade                               |   3    |   🔒   |
+|  7   |    Alta    |                                        Como Supervisor de Vendas, quero visualizar a trilha de decisão de uma regra para entender como o sistema chegou naquele resultado.                                        |   3    |   🔒   |
+|  8   |   Média    |                                             Como Supervisor de Vendas, quero gerar um relatório final referente à campanha para visualizar o real impacto financeiro                                              |   3    |   🔒   |
+|  9   |   Média    |                                      Como Supervisor de Vendas, quero visualizar gráficos e insights ao final da campanha para entender os resultados e realizar comparações                                      |   3    |   🔒   |
+|  10  |   Baixa    |                                               Como Supervisor de Vendas, quero visualizar as campanhas já realizadas, em andamento e previstas, para gerenciamento.                                               |   3    |   🔒   |
 
-Quando a história envolver o módulo de IA:
+<!--Status: ✅ ❌ 🔒 --->
 
-- [ ] A entrada enviada à IA foi validada.
-- [ ] O resultado retornado pela IA foi validado.
-- [ ] A integração com o fluxo de regras de negócio foi validada.
-- [ ] A resposta apresentada ao usuário possui explicação compreensível.
-- [ ] O comportamento esperado para respostas inválidas ou inconsistentes foi definido.
+## :bomb: DoR - Definition of Ready <a id="dor"></a>
 
-### Code Review
+Uma história está pronta para entrar em desenvolvimento quando:
 
+- [ ] A história possui identificador único.
+- [ ] O objetivo está claramente descrito.
+- [ ] Os critérios de aceitação estão definidos.
+- [ ] A regra de negócio está compreendida.
+- [ ] As dependências foram identificadas.
+- [ ] As dúvidas relevantes foram esclarecidas.
+- [ ] O Product Owner validou o escopo.
+- [ ] A equipe possui informações suficientes para iniciar o desenvolvimento.
+
+## :boom: DoD - Definition of Done <a id="dod"></a>
+
+Uma história é considerada concluída quando:
+
+- [ ] Implementação realizada.
+- [ ] Critérios de aceitação atendidos.
+- [ ] Testes executados com sucesso.
+- [ ] Código revisado.
 - [ ] Pull Request aberto.
 - [ ] Code Review realizado.
 - [ ] Ajustes solicitados no review concluídos.
-- [ ] Pull Request aprovado.
-- [ ] Código integrado à branch definida pelo projeto.
-
-### Documentação
-
 - [ ] Documentação atualizada quando necessário.
-- [ ] Novas configurações foram documentadas.
-- [ ] Alterações relevantes no funcionamento foram registradas.
-
-## Exemplo
-
-Para uma história relacionada à análise de uma nova regra de negócio, a tarefa somente será considerada concluída quando:
-
-1. O usuário conseguir informar a regra.
-2. O backend receber e processar a solicitação.
-3. O módulo de IA interpretar a intenção.
-4. As regras existentes forem consultadas.
-5. Possíveis conflitos forem identificados.
-6. O resultado for apresentado de forma explicável.
-7. Os testes definidos para a funcionalidade forem aprovados.
-8. O código passar pelo Code Review.
-9. O Pull Request for aprovado e integrado.
-
-## Critério final
-
-Uma User Story será considerada **Done** somente quando todos os critérios aplicáveis da implementação, testes, revisão, documentação e integração forem concluídos.
+- [ ] Pull Request aprovado.
+- [ ] Código integrado à branch principal.
 
 ---
 
-# 3\. `docs/estrategia-branch.md`
+## 📅 Cronograma de Sprints <a id="sprint"></a>
 
-Para o Camplana, eu documentaria também que existem partes diferentes do sistema (`backend`, `frontend`, `ai` e `iac`).
-
-Estratégia de Branch — Camplana
-
-# Estratégia de Branch
-
-## Objetivo
-
-A estratégia de branches define como o time do Camplana organiza o desenvolvimento, revisão e integração das alterações realizadas no projeto.
-
-A estratégia busca evitar alterações diretamente na branch principal e facilitar a identificação das funcionalidades e correções desenvolvidas durante cada Sprint.
-
-## Branches principais
-
-### `main`
-
-Branch destinada à versão integrada e estável do projeto.
-
-Alterações diretamente na `main` não devem ser realizadas.
-
-As alterações devem passar por Pull Request e Code Review antes da integração.
-
-### `develop`
-
-Branch destinada à integração das funcionalidades desenvolvidas durante as Sprints.
-
-As branches de desenvolvimento devem ser criadas a partir da `develop`, quando esse fluxo estiver sendo utilizado pelo time.
-
-## Branches de funcionalidade
-
-Para novas funcionalidades:
-
-```
-feature/<descricao>
-```
-
-Exemplos:
-
-```
-feature/interpretacao-regra
-feature/simulacao-campanha
-feature/aprovacao-regra
-feature/trilha-de-decisao
-```
-
-## Branches de correção
-
-Para correções de problemas:
-
-```
-fix/<descricao>
-```
-
-Exemplos:
-
-```
-fix/validacao-regra
-fix/erro-simulacao
-fix/calculo-impacto-financeiro
-```
-
-## Branches de documentação
-
-Para alterações exclusivamente relacionadas à documentação:
-
-```
-docs/<descricao>
-```
-
-Exemplos:
-
-```
-docs/manual-usuario
-docs/manual-instalacao
-docs/arquitetura
-```
-
-## Branches de infraestrutura
-
-Para alterações relacionadas à infraestrutura:
-
-```
-infra/<descricao>
-```
-
-Exemplo:
-
-```
-infra/configuracao-docker
-```
-
-## Fluxo de desenvolvimento
-
-```
-                  ┌──────────────┐
-                  │     main     │
-                  └──────▲───────┘
-                         │
-                    Pull Request
-                         │
-                  ┌──────┴───────┐
-                  │    develop   │
-                  └──────▲───────┘
-                         │
-          ┌──────────────┼──────────────┐
-          │              │              │
-          │              │              │
-    feature/...       fix/...        docs/...
-          │              │              │
-          └──────────────┼──────────────┘
-                         │
-                    Desenvolvimento
-```
-
-## Regras
-
-- Não realizar commits diretamente na `main`.
-- Criar uma branch específica para cada alteração.
-- Utilizar nomes descritivos.
-- Evitar misturar funcionalidades diferentes na mesma branch.
-- Abrir Pull Request após a conclusão da implementação.
-- Realizar Code Review antes da integração.
-- Corrigir os apontamentos realizados no review.
-- Integrar a alteração somente após aprovação.
-
-## Relação com as Sprints
-
-Sempre que possível, cada branch deve estar relacionada a uma User Story do backlog e à Sprint correspondente.
-
-Exemplo:
-
-```
-Sprint 1
-└── US01 - Interpretação de regra
-    └── feature/interpretacao-regra
-```
+| Sprint            | Período       | Status     |
+| ----------------- | ------------- | ---------- |
+| Kick Off          | 24/08 a 28/08 | Finalizado |
+| 01                | 07/09 a 27/09 | Finalizado |
+| 02                | 05/10 a 25/10 | A fazer    |
+| 03                | 02/11 a 22/11 | A fazer    |
+| Feira de Soluções | 03/12         | A fazer    |
 
 ---
 
-# 4\. `docs/padrao-commit.md`
+<!--Status: Finalizado, A Fazer ou Em andamento --->
 
-Aqui também dá para relacionar os commits diretamente ao projeto.
+## 🛣️ Roadmap de Entregas <a id="roadmap"></a>
 
-Padrões de Commit — Camplana
+O cronograma abaixo apresenta visualmente a evolução planejada das principais entregas.
 
-# Padrões de Commit
+---
 
-## Objetivo
+## 📋 Protótipo da Aplicação <a id="prototipo"></a>
 
-Definir um padrão para as mensagens de commit do Camplana, facilitando a leitura do histórico e a identificação das alterações realizadas.
+<div align="center"> 
+<table>
+  <tr>
+<th> <img src = ""> </th>
+<th> <img src = ""> </th>
+<th> <img src = ""> </th>
+<th> <img src = ""> </th>
+</tr> <tr>
+<td> <img src = ""></td>
+<td> <img src =""> </td>
+<td> <img src = ""> </td>
+<td> <img src = ""> </td>
+  </tr>
+</table> 
+</div>
 
-## Formato
+## 🎥 Demonstração
 
-Os commits devem seguir o formato:
+<a id="demo"></a>
 
+| Sprint   | Entregas | Vídeo do incremento |
+| -------- | -------- | ------------------- |
+| Sprint 1 | 🚧       | 🚧                  |
+| Sprint 2 | 🚧       | 🚧                  |
+| Sprint 3 | 🚧       | 🚧                  |
+
+## 🛠️ Tecnologias
+
+<a id="tecnologias"></a>
+
+<div align="center">
+
+![Vue.js](https://img.shields.io/badge/vue.js-00b4f1.svg?style=for-the-badge&logo=vuedotjs&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/spring_boot-00b4f1.svg?style=for-the-badge&logo=springboot&logoColor=white)
+![Java](https://img.shields.io/badge/java-00b4f1.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-00b4f1?style=for-the-badge&logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-00b4f1?style=for-the-badge&logo=docker&logoColor=white)
+![Python](https://img.shields.io/badge/python-00b4f1.svg?style=for-the-badge&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/fastapi-00b4f1.svg?style=for-the-badge&logo=fastapi&logoColor=white)
+![LangGraph](https://img.shields.io/badge/langgraph-00b4f1?style=for-the-badge&logo=langgraph&logoColor=white)
+![OpenRouter](https://img.shields.io/badge/OpenRouter-00b4f1?style=for-the-badge&logo=openrouter&logoColor=white)
+![Gemini](https://img.shields.io/badge/Gemini-00b4f1?style=for-the-badge&logo=googlegemini&logoColor=white)
+![Jira](https://img.shields.io/badge/jira-00b4f1.svg?style=for-the-badge&logo=jira&logoColor=white)
+![Figma](https://img.shields.io/badge/figma-00b4f1.svg?style=for-the-badge&logo=figma&logoColor=white)
+
+</div>
+
+---
+
+## 📂 Estrutura do Projeto <a id="estrutura"></a>
+
+Este repositório reúne os três serviços como **submódulos Git**, apontando para a branch de integração da Sprint 1 (`feature/implementacao-do-fluxo-completo`, definida no `.gitmodules`).
+
+```text
+domrock-camplana/
+├── DomRock-Frontend/      # submódulo: chat, painel da campanha e resultado (Vue 3 + Vite + Pinia)
+├── DomRock-Backend/       # submódulo: API, importação das bases, usuários (Spring Boot 4 + PostgreSQL)
+│   └── docs/domrock-dataset/   # planilhas da Dom Rock (RH, vendas e % de comissão, jul-dez/2025)
+├── DomRock-Lana/          # submódulo: agente, geração/execução do código e simulação (FastAPI + LangGraph)
+├── docs/                  # arquitetura, DoR/DoD, estratégia de branch, padrão de commit e manuais
+├── scripts/
+│   └── importar-dataset.sh     # carrega as bases no banco pelo backend
+├── docker-compose.yml     # sobe PostgreSQL, backend, Lana e frontend
+├── .env.example           # variáveis (chaves de IA, portas)
+├── README.md
+└── LICENSE
 ```
-<tipo>: <descrição>
+
+### 🏗️ Arquitetura
+
+```text
+Navegador ──> Frontend (Vite, proxy /backend) ──> Backend Spring (/api/chat, /api/simulacoes)
+                                                       │
+                                                       ▼
+                                   Lana FastAPI (/agent/invoke, /simulacao) ──> PostgreSQL
+                                                       │                       (papel somente leitura)
+                                                       ▼
+                                   Código Python da regra em subprocesso isolado
 ```
 
-## Tipos de commit
+O backend é a porta de entrada: repassa o chat e a simulação para a Lana por HTTP. A Lana consulta o banco com um papel somente leitura (`lana_leitura`), com guarda de SQL e limite de linhas. A documentação detalhada está em [Documentação de Arquitetura](docs/arquitetura.md).
 
-| Tipo       | Utilização                                      |
-| ---------- | ----------------------------------------------- |
-| `feat`     | Nova funcionalidade                             |
-| `fix`      | Correção de bug                                 |
-| `docs`     | Alteração de documentação                       |
-| `refactor` | Refatoração sem alteração de comportamento      |
-| `test`     | Criação ou alteração de testes                  |
-| `chore`    | Tarefas de manutenção                           |
-| `style`    | Alterações de formatação ou estilo              |
-| `build`    | Alterações relacionadas à build ou dependências |
-| `ci`       | Alterações relacionadas à integração contínua   |
+# ⚙️ Como Executar? <a id="como-executar"></a>
 
-## Exemplos do projeto
+### Pré-requisitos
 
-### Nova funcionalidade
+- Git;
+- Docker com Compose v2;
+- Uma chave de API do Gemini (ou do OpenRouter) para a Lana.
 
-```
-feat: adiciona interpretação de regras em linguagem natural
+Não é preciso instalar Java, Node ou Python: tudo roda em containers.
+
+### 1. Clonar com os submódulos
+
+```bash
+git clone --recurse-submodules https://github.com/codedontblow-org/domrock-camplana
+cd domrock-camplana
+git submodule update --init --remote   # garante a branch feature/implementacao-do-fluxo-completo
 ```
 
-```
-feat: implementa simulação de campanha
+Para atualizar depois (novos commits na branch): `git submodule update --remote`.
+
+### 2. Configurar as variáveis
+
+```bash
+cp .env.example .env
 ```
 
-### Correção
+| Variável | Exemplo | Para quê |
+| --- | --- | --- |
+| `AI_PROVIDER` | `GEMINI` | `GEMINI` ou `OPENROUTER` |
+| `AI_MODEL` | `gemini-3.5-flash-lite` | Modelo usado pela Lana |
+| `GEMINI_API_KEY` | `...` | Chave do provedor escolhido |
+| `CODEGEN_MODO` | `llm` | `llm` gera o código com IA; `modelo` usa o código fixo (plano B) |
+| `OPENROUTER_API_KEY` / `GROQ_API_KEY` | `...` | Chaves dos provedores de reserva (opcionais) |
+| `AI_FALLBACKS` | `GEMINI:gemini-3.1-flash-lite,GROQ:openai/gpt-oss-120b` | Reserva em ordem se o principal falhar (cota 429, fora do ar). Provedor sem chave é ignorado |
+| `AI_TIMEOUT_S` | `30` | Segundos por modelo antes de passar ao próximo |
+| `DB_USERNAME` / `DB_PASSWORD` | `postgres` / `postgres` | Banco local |
+| `LANA_DB_PASSWORD` | `lana_leitura` | Senha do papel somente leitura da Lana (criado pelo Flyway) |
 
-```
-fix: corrige cálculo do impacto financeiro
+### 3. Subir tudo
+
+```bash
+docker compose up -d --build
 ```
 
-```
-fix: corrige validação de regra conflitante
+### 4. Carregar as bases (só na primeira vez)
+
+```bash
+./scripts/importar-dataset.sh
 ```
 
-### Documentação
+O script envia RH, vendas e % de comissão de jul a dez/2025 para `POST /api/importacao`. Se trocou a porta do backend, passe o endereço: `./scripts/importar-dataset.sh http://localhost:8081`. No Windows, rode pelo Git Bash ou WSL.
 
-```
-docs: adiciona manual de instalação
-```
+### 5. Acessar
 
-```
-docs: atualiza documentação da arquitetura
-```
+| Serviço | Endereço |
+| --- | --- |
+| Aplicação (chat) | http://localhost:5173/chat |
+| Backend (Spring) | http://localhost:8080 |
+| Lana (FastAPI, Swagger em `/docs`) | http://localhost:8000/docs |
+| PostgreSQL | `localhost:5432` |
+
+Se alguma porta já estiver em uso, troque no `.env` (`FRONTEND_HOST_PORT`, `BACKEND_HOST_PORT`, `LANA_HOST_PORT`, `POSTGRES_HOST_PORT`).
+
+### Regras para testar
+
+Com valor conferido em SQL (o custo pode variar alguns centavos pelo arredondamento por matrícula):
+
+| Regra | Meta / orçamento | Custo extra esperado |
+| --- | --- | --- |
+| Todas as vendas de 24/11/2025 a 30/11/2025 terão +1% de comissão (Black Friday), para todas as marcas e cargos, exceto gerentes (cargo 150). | R$ 2.000.000 / R$ 20.000 | ≈ R$ 23.736,14, passa do orçamento; cenário sugerido: 0,84% por R$ 19.938,34 |
+| Em outubro de 2025, a marca 30 terá acréscimo de 0,5% na comissão para todos os cargos, exceto gerentes. | R$ 1.500.000 / R$ 2.000 | R$ 1.668,33, cabe no orçamento |
+| Em dezembro de 2025, os gerentes das marcas 10 e 40 terão +0,3% de comissão. | R$ 5.000.000 / R$ 25.000 | R$ 30.264,53, passa do orçamento |
+
+Sem meta ou orçamento no texto, a Lana pede os valores que faltam. Perguntas como _"Quanto a marca Azul vendeu em agosto de 2025?"_ são respondidas consultando o banco; pedidos fora do escopo (ex.: _"mostre todas as vendas com o nome de cada funcionário"_) são recusados.
+
+**Plano B:** com `CODEGEN_MODO=modelo` no `.env` e `docker compose up -d lana`, a simulação usa o código determinístico, sem depender da LLM.
 
 ### Testes
 
-```
-test: adiciona testes para simulação de campanha
-```
-
-### Refatoração
-
-```
-refactor: reorganiza serviço de análise de regras
-```
-
-### Infraestrutura
-
-```
-ci: configura pipeline de integração
+```bash
+# Lana
+docker exec -w /app camplana-lana sh -c "pip install -q -r requirements-dev.txt && PYTHONPATH=. pytest tests"
+# Frontend
+docker exec -w /app camplana-frontend sh -c "npx vue-tsc --build && npx vitest run"
+# Backend (precisa de Docker para o Testcontainers)
+cd DomRock-Backend && ./mvnw test
 ```
 
-## Boas práticas
+### Limitações conhecidas (Sprint 1)
 
-- Utilizar mensagens objetivas.
-- Descrever o que foi alterado.
-- Evitar mensagens genéricas como `update`, `alterações` ou `correções`.
-- Manter cada commit relacionado a uma alteração lógica.
-- Evitar incluir alterações não relacionadas no mesmo commit.
-
-## Exemplo de histórico
-
-```
-feat: adiciona endpoint de análise de regras
-test: adiciona testes para análise de regras
-fix: corrige validação de região
-docs: atualiza manual do usuário
-```
+- Simulação só sobre os meses da base (jul a dez/2025); mês futuro ainda não é aceito.
+- Um tipo de regra: acréscimo de % num período, por marca e cargo, com meta e orçamento.
+- A comissão sem a campanha ainda não aplica proporcional de admissão/demissão nem férias e afastamentos.
+- Sem autenticação, aprovação e persistência de regras e simulações; o histórico do chat fica em memória na Lana e some ao reiniciar o container.
+- O código gerado roda em subprocesso isolado (validação AST, builtins e imports restritos, sem variáveis de ambiente, limites de memória/CPU) dentro do container da Lana; um container efêmero sem rede é a evolução prevista.
 
 ---
 
-# 5\. `docs/guias/manual-usuario.md`
-
-Esse é o que eu considero mais importante para apresentar o **Camplana para alguém que nunca viu o projeto**.
-
-Manual do Usuário — Camplana
-
-# Manual do Usuário — Camplana
-
-## 1\. Sobre o Camplana
-
-O Camplana é uma plataforma para gerenciamento, análise e simulação de regras de negócio.
-
-A plataforma utiliza Inteligência Artificial para auxiliar na interpretação de regras descritas em linguagem natural, identificar possíveis conflitos e apresentar uma explicação para o resultado da análise.
-
-## 2\. Fluxo principal
-
-O fluxo principal da aplicação é composto por:
-
-1. Entrada do cenário.
-2. Interpretação da regra.
-3. Análise das regras existentes.
-4. Explicação do resultado.
-5. Simulação.
-6. Aprovação, quando aplicável.
-7. Acompanhamento e rastreabilidade.
-
-## 3\. Criando uma nova regra
-
-Na tela inicial, o usuário deve informar a intenção da nova regra utilizando linguagem natural.
-
-### Exemplo
-
-```
-Comissão de 8% para a Região Sul.
-```
-
-O sistema utiliza essa informação para identificar os elementos relevantes da regra.
-
-## 4\. Análise da regra
-
-Após o envio da regra, o sistema realiza a análise considerando as regras existentes na base.
-
-A análise pode verificar informações como:
-
-- Região;
-- Produto;
-- Percentual de comissão;
-- Campanha;
-- Meta;
-- Limites definidos;
-- Possíveis sobreposições;
-- Conflitos com regras existentes.
-
-## 5\. Resultado explicável
-
-Após a análise, o sistema apresenta o resultado acompanhado de uma explicação.
-
-### Exemplo
-
-```
-Aprovado.
-
-O limite para a Região Sul é de 10% e não foi
-identificada sobreposição com campanhas existentes.
-```
-
-A explicação tem como objetivo permitir que o usuário compreenda os fatores considerados pelo sistema.
-
-## 6\. Simulação
-
-Quando a regra estiver apta para simulação, o usuário poderá executar uma simulação.
-
-A simulação apresenta uma estimativa do impacto financeiro da regra considerando o cenário selecionado.
-
-O usuário poderá utilizar diferentes cenários para comparar os possíveis resultados antes do envio para aprovação.
-
-## 7\. Aprovação
-
-Quando uma regra precisar de aprovação, ela será encaminhada para avaliação do Supervisor de Vendas.
-
-O supervisor poderá:
-
-- Visualizar a regra;
-- Consultar a análise realizada;
-- Visualizar a simulação;
-- Aprovar a regra;
-- Reprovar a regra;
-- Acompanhar o status;
-- Consultar informações relacionadas à decisão.
-
-## 8\. Status da regra
-
-Durante seu ciclo de vida, uma regra poderá apresentar diferentes estados.
-
-Exemplo:
-
-```
-Criada
-   ↓
-Em análise
-   ↓
-Simulada
-   ↓
-Aguardando aprovação
-   ↓
-Aprovada / Reprovada
-```
-
-## 9\. Rastreabilidade
-
-O sistema mantém informações relacionadas às alterações e decisões realizadas sobre as regras.
-
-O usuário autorizado poderá consultar:
-
-- Histórico de alterações;
-- Usuário responsável pela alteração;
-- Aprovações e reprovações;
-- Registros de decisão;
-- Informações utilizadas na análise.
-
-## 10\. Exemplo de utilização
-
-### Cenário
-
-Um Gerente de Vendas deseja criar uma campanha oferecendo comissão de 8% para a Região Sul.
-
-### Entrada
-
-```
-Comissão de 8% para a Região Sul.
-```
-
-### Análise
-
-O Camplana consulta as regras existentes e verifica os limites e possíveis conflitos.
-
-### Resultado
-
-```
-Aprovado para simulação.
-
-Limite identificado: 10%.
-Comissão solicitada: 8%.
-Conflitos encontrados: nenhum.
-```
-
-### Simulação
-
-O usuário executa a simulação para visualizar o impacto financeiro estimado.
-
-### Próxima etapa
-
-Caso necessário, a regra é enviada para aprovação do Supervisor de Vendas.
-
----
-
-# 6. `docs/guias/manual-instalacao.md`
-
-Aqui eu **não colocaria comandos inventados**, porque seu README ainda não informa exatamente como cada serviço é iniciado. Dá para deixar a documentação preparada e preencher os comandos conforme vocês confirmarem os projetos.
-
-Manual de Instalação — Camplana
-
-# Manual de Instalação — Camplana
-
-## 1\. Visão geral
-
-O Camplana é organizado em diferentes componentes:
-
-```
-domrock-camplana/
-├── domrock-backend/
-├── domrock-frontend/
-├── domrock-ai/
-├── domrock-iac/
-└── docs/
-```
-
-Cada componente possui uma responsabilidade específica na aplicação.
-
-## 2\. Pré-requisitos
-
-Antes de executar o projeto, é necessário possuir:
-
-- Git;
-- Java;
-- Node.js;
-- npm;
-- Python;
-- PostgreSQL;
-- Docker, quando necessário para execução dos serviços.
-
-## 3\. Clonando o projeto
-
-Clone o repositório:
-
-```
-git clone https://github.com/codedontblow-org/domrock-camplana
-```
-
-Acesse o projeto:
-
-```
-cd domrock-camplana
-```
-
-## 4\. Configuração do banco de dados
-
-O Camplana utiliza PostgreSQL.
-
-Crie um banco de dados para o ambiente de desenvolvimento e configure as credenciais utilizadas pela aplicação.
-
-As configurações devem ser mantidas em variáveis de ambiente e não devem ser versionadas no repositório.
-
-Exemplo:
-
-```
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=camplana
-DB_USER=seu_usuario
-DB_PASSWORD=sua_senha
-```
-
-> Os nomes exatos das variáveis devem seguir a configuração implementada no backend.
-
-## 5\. Configuração do backend
-
-Acesse o diretório:
-
-```
-cd domrock-backend
-```
-
-O backend utiliza Java e Spring Boot.
-
-O comando de execução deve seguir o sistema de build configurado no projeto.
-
-### Maven
-
-Caso o projeto utilize Maven:
-
-```
-./mvnw spring-boot:run
-```
-
-No Windows:
-
-```
-mvnw.cmd spring-boot:run
-```
-
-## 6\. Configuração do frontend
-
-Acesse o diretório do frontend:
-
-```
-cd domrock-frontend/camplana-web
-```
-
-Instale as dependências:
-
-```
-npm install
-```
-
-Execute o projeto:
-
-```
-npm run dev
-```
-
-O endereço exibido pelo terminal deverá ser utilizado para acessar a aplicação.
-
-## 7\. Configuração do módulo de IA
-
-Acesse:
-
-```
-cd domrock-ai/camplana
-```
-
-Crie e ative o ambiente virtual Python:
-
-```
-python -m venv .venv
-```
-
-### Windows
-
-```
-.venv\Scripts\activate
-```
-
-### Linux/macOS
-
-```
-source .venv/bin/activate
-```
-
-Instale as dependências:
-
-```
-pip install -r requirements.txt
-```
-
-Configure as variáveis necessárias para os serviços de IA utilizados pelo projeto.
-
-Exemplo:
-
-```
-OPENROUTER_API_KEY=sua_chave
-```
-
-> As variáveis exatas devem seguir a configuração implementada no módulo de IA.
-
-## 8\. Infraestrutura
-
-O diretório:
-
-```
-domrock-iac/
-└── camplana/
-```
-
-contém os arquivos relacionados à infraestrutura do projeto.
-
-Caso sejam utilizados containers Docker, consulte os arquivos de configuração presentes nesse diretório antes de iniciar os serviços manualmente.
-
-## 9\. Ordem recomendada de execução
-
-Em um ambiente local, a ordem recomendada é:
-
-```
-1. PostgreSQL
-       ↓
-2. Backend
-       ↓
-3. Serviço de IA
-       ↓
-4. Frontend
-```
-
-## 10\. Verificação
-
-Após iniciar os componentes, verifique:
-
-- Backend disponível;
-- Banco de dados conectado;
-- Serviço de IA disponível;
-- Frontend carregando;
-- Comunicação entre frontend e backend;
-- Comunicação entre backend e módulo de IA.
-
-## 11\. Problemas comuns
-
-### Banco de dados não conecta
-
-Verifique:
-
-- Host;
-- Porta;
-- Nome do banco;
-- Usuário;
-- Senha;
-- Status do PostgreSQL.
-
-### Dependências do frontend não encontradas
-
-Execute:
-
-```
-npm install
-```
-
-### Ambiente Python não encontrado
-
-Crie novamente o ambiente virtual:
-
-```
-python -m venv .venv
-```
-
-### Variável de ambiente ausente
-
-Verifique se o arquivo de configuração foi criado e se todas as variáveis obrigatórias foram preenchidas.
-
-## 12\. Segurança
-
-Não versionar:
-
-- Senhas;
-- Chaves de API;
-- Tokens;
-- Credenciais de banco;
-- Arquivos `.env` contendo informações sensíveis.
-
-Utilize arquivos de exemplo, como:
-
-```
-.env.example
-```
-
-para documentar as variáveis necessárias sem expor credenciais reais.
-
-## Uma alteração que eu faria no seu README
-
-Com esses arquivos, a estrutura ficaria melhor assim:
-
-```
-docs/
-├── backlogs/
-│   ├── DoR.md
-│   └── DoD.md
-│
-├── guias/
-│   ├── manual-usuario.md
-│   └── manual-instalacao.md
-│
-├── arquitetura.md
-├── estrategia-branch.md
-└── padrao-commit.md
-```
-
-E o trecho do README:
-
-```
 # 📖 Guia de Documentações <a id="manual"></a>
 
 Toda a documentação complementar do projeto permanece versionada no diretório `docs/`.
@@ -838,7 +315,54 @@ Toda a documentação complementar do projeto permanece versionada no diretório
 - [Padrões de Commit](docs/padrao-commit.md)
 - [Manual do Usuário](docs/guias/manual-usuario.md)
 - [Manual de Instalação](docs/guias/manual-instalacao.md)
-- [Arquitetura](docs/arquitetura.md)
-```
 
-**Um detalhe importante:** no manual de instalação eu deixei alguns comandos condicionais porque, pelo README que você enviou, ainda não dá para saber se o backend usa Maven ou Gradle, qual é a porta do Spring Boot, qual é a porta do frontend, como o serviço Python é iniciado e quais variáveis de ambiente o código realmente exige. É melhor confirmar isso no código do projeto do que colocar comandos que podem estar errados.
+---
+
+# 💣 Pavio Cutters: <a id="team"></a>
+
+<div align="center"> 
+<table> 
+<tr> 
+<td align="center" width="180px"> <img src="https://github.com/luanaapms.png" width="80px" alt="Luana Souza"/><br> <b>Luana Souza</b><br> Scrum Master<br> 
+<a href="https://github.com/luanaapms"> <img src="https://img.shields.io/badge/GitHub-0b192c?style=flat&logo=github&logoColor=white" alt="GitHub"/> </a> </td>
+
+<td align="center" width="180px"> <img src="https://github.com/Doryumi.png" width="80px" alt="Vanessa da Costa"/><br> <b>Vanessa da Costa</b><br> Product Owner<br> <a href="https://github.com/Doryumi"> <img src="https://img.shields.io/badge/GitHub-0b192c?style=flat&logo=github&logoColor=white" alt="GitHub"/> </a> </td>
+
+<td align="center" width="180px"> <img src="https://github.com/henrySilverIX.png" width="80px" alt="Henrique Tadeu"/><br> <b>Henrique Tadeu</b><br> Dev Team<br> <a href="https://github.com/henrySilverIX"> <img src="https://img.shields.io/badge/GitHub-0b192c?style=flat&logo=github&logoColor=white" alt="GitHub"/> </a> </td>
+
+<td align="center" width="180px"> <img src="https://github.com/Leonardo-dSouza.png" width="80px" alt="Leonardo Cristiano"/><br> <b>Leonardo Cristiano</b><br> Dev Team<br> <a href="https://github.com/Leonardo-dSouza"> <img src="https://img.shields.io/badge/GitHub-0b192c?style=flat&logo=github&logoColor=white" alt="GitHub"/> </a> </td>
+
+</tr> 
+<tr> 
+<td align="center" width="180px"> <img src="https://github.com/EstupendoG.png" width="80px" alt="Rafael Gonçalves"/><br> <b>Rafael Gonçalves</b><br> Dev Team<br> 
+<a href="https://github.com/EstupendoG"> <img src="https://img.shields.io/badge/GitHub-0b192c?style=flat&logo=github&logoColor=white" alt="GitHub"/> </a> </td>
+
+<td align="center" width="180px"> <img src="https://github.com/raphaelamonteiro.png" width="80px" alt="Raphaela Monteiro"/><br> <b>Raphaela Monteiro</b><br> Dev Team<br> 
+<a href="https://github.com/raphaelamonteiro"> <img src="https://img.shields.io/badge/GitHub-0b192c?style=flat&logo=github&logoColor=white" alt="GitHub"/> </a> </td>
+
+<td align="center" width="180px"> <img src="https://github.com/ramonads42.png" width="80px" alt="Ramon Amorim da Silva"/><br> <b>Ramon Amorim</b><br> Dev Team<br> <a href="https://github.com/ramonads42"> <img src="https://img.shields.io/badge/GitHub-0b192c?style=flat&logo=github&logoColor=white" alt="GitHub"/> </a> </td>
+
+<td align="center" width="180px"> <img src="https://github.com/victorrgodoy.png" width="80px" alt="Victor Godoy"/><br> <b>Victor Godoy</b><br> Dev Team<br> <a href="https://github.com/victorrgodoy"> <img src="https://img.shields.io/badge/GitHub-0b192c?style=flat&logo=github&logoColor=white" alt="GitHub"/> </a> </td> 
+</tr> 
+</table> 
+</div>
+
+## 👥 Cliente: <a id="cliente"></a>
+
+<div align="center">
+
+|     Cliente      |                      Empresa                      |
+| :--------------: | :-----------------------------------------------: |
+| André de Almeida | <a href='https://www.domrock.net/'> Dom Rock </a> |
+
+</div>
+
+# 🥅 Docentes: <a id="docentes"></a>
+
+<div align="center">
+
+|                                         P²                                         |                                       M²                                       |
+| :--------------------------------------------------------------------------------: | :----------------------------------------------------------------------------: |
+| <a href='http://lattes.cnpq.br/9441903297380731'> José Walmir Gonçalves Duque </a> | <a href='http://lattes.cnpq.br/3238411230371891'>Cláudio Etelvino de Lima </a> |
+
+</div>

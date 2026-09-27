@@ -25,3 +25,5 @@ replay_pid*
 
 # MacOS
 .DS_Store
+# Variáveis locais (chaves de API)
+.env
