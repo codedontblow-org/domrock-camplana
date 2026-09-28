@@ -133,6 +133,8 @@ Uma história é considerada concluída quando:
 
 O cronograma abaixo apresenta visualmente a evolução planejada das principais entregas.
 
+<img src = "assets\Roadmap.png"> 
+
 ---
 
 ## 📋 Protótipo da Aplicação <a id="prototipo"></a>
@@ -140,16 +142,9 @@ O cronograma abaixo apresenta visualmente a evolução planejada das principais 
 <div align="center"> 
 <table>
   <tr>
-<th> <img src = ""> </th>
-<th> <img src = ""> </th>
-<th> <img src = ""> </th>
-<th> <img src = ""> </th>
-</tr> <tr>
-<td> <img src = ""></td>
-<td> <img src =""> </td>
-<td> <img src = ""> </td>
-<td> <img src = ""> </td>
-  </tr>
+<th> <img src = "docs\prototipo\tela-1.png"> </th>
+<th> <img src = "docs\prototipo\tela-2.png"> </th>
+</tr> 
 </table> 
 </div>
 
@@ -157,12 +152,23 @@ O cronograma abaixo apresenta visualmente a evolução planejada das principais 
 
 <a id="demo"></a>
 
+### • SPRINT 1
+https://github.com/user-attachments/assets/e0fafe44-9b95-4d7e-b080-081ebb5af7cb 
+
+### • SPRINT 2
+> Em breve!
+### • SPRINT 3
+> Em breve!
+
+<!--
 | Sprint   | Entregas | Vídeo do incremento |
 | -------- | -------- | ------------------- |
 | Sprint 1 | 🚧       | 🚧                  |
 | Sprint 2 | 🚧       | 🚧                  |
 | Sprint 3 | 🚧       | 🚧                  |
-
+ --->
+ ---
+ 
 ## 🛠️ Tecnologias
 
 <a id="tecnologias"></a>
