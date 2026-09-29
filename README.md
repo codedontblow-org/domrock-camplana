@@ -10,8 +10,6 @@
 <a href="#desafio">Desafio</a> |
 <a href="#mvp">Solução</a> |
 <a href="#backlog">Backlog do Produto</a> |
-<!-- <a href="#dor">DoR</a> |
-<a href="#dod">DoD</a> | -->
 <a href="#sprint">Cronograma de Sprints</a> |
 <a href="#roadmap">Roadmap de Entregas</a> |
 <a href="#prototipo">Protótipo</a> |
@@ -21,6 +19,9 @@
 <a href="#como-executar">Como Executar?</a> |
 <a href="#manual">Documentações</a> |
 <a href="#team">Equipe</a>
+
+<!-- <a href="#dor">DoR</a> |
+<a href="#dod">DoD</a> | -->
 
 </div>
 
