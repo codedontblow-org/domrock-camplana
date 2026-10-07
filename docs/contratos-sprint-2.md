@@ -24,13 +24,7 @@ Este documento centraliza os formatos JSON (requests e responses) que trafegarã
 **Response (200 OK):**
 ```json
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR...",
-  "perfil": "GERENTE_VENDAS",
-  "validade": "2025-11-01T23:59:59Z",
-  "usuario": {
-    "nome": "João Silva",
-    "matricula": "987654"
-  }
+ 
 }
 ```
 
