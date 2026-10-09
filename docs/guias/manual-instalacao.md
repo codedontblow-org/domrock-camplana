@@ -180,6 +180,18 @@ Em um ambiente local, a ordem recomendada é:
 
 ## 10\. Verificação
 
+### 10.1 Carga das intercorrências de RH (jul a dez/2025)
+
+Com o dataset principal já importado, execute a carga das intercorrências e gere o relatório de pendências:
+
+```bash
+./scripts/importar-intercorrencias.sh
+```
+
+Nota de idempotência: O script pode ser reexecutado de forma segura sem duplicação de dados em evento_rh. O relatório gerado fica em docs/relatorio-pendencias-intercorrencias.md.
+
+### 10.2 Checklist de funcionamento
+
 Após iniciar os componentes, verifique:
 
 - Backend disponível;
