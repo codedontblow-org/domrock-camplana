@@ -8,25 +8,90 @@ Este documento centraliza os formatos JSON (requests e responses) que trafegarã
 
 ## 1. Login
 
-**`POST /api/auth/login`**
+**`POST /api/auth/login`** (rota pública, não exige token)
 
-- **Headers na Resposta:** 
-  - Para usuários de desenvolvimento/administração, o header `X-Usuario-Dev: true` será injetado.
+Autentica com e-mail e senha e devolve um token JWT.
 
 **Request:**
 ```json
 {
-  "email": "gerente.vendas@camplana.com.br",
-  "senha": "password123"
+  "email": "gabriela@camplana.com.br",
+  "senha": "123456"
 }
 ```
+
+| Campo | Tipo | Obrigatório | Observação |
+|---|---|---|---|
+| `email` | string | sim | |
+| `senha` | string | sim | Nunca é devolvida nem registrada em log |
 
 **Response (200 OK):**
 ```json
 {
- 
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "perfil": "GERENTE",
+  "validade": "2026-10-11T01:48:55.055Z",
+  "usuario": {
+    "id": 1,
+    "nome": "Gabriela",
+    "email": "gabriela@camplana.com.br"
+  }
 }
 ```
+
+| Campo | Descrição |
+|---|---|
+| `token` | JWT assinado (HS256), válido por 8 horas |
+| `perfil` | `ADMIN`, `GERENTE` ou `SUPERVISOR` |
+| `validade` | Data/hora de expiração do token, ISO-8601 em UTC |
+| `usuario` | Dados básicos de quem logou |
+
+**Conteúdo do token (claims):** `sub` (e-mail), `id`, `perfil`, `iss` (`camplana-api`) e `exp`.
+
+**Erros:**
+
+| Status | Quando | `message` |
+|---|---|---|
+| 401 | E-mail inexistente, senha errada ou usuário inativo | `E-mail ou senha inválidos` |
+
+A mensagem é a mesma nos três casos, para não revelar qual campo errou.
+
+### Autenticação nas demais rotas
+
+Toda rota protegida exige o cabeçalho:
+
+```
+Authorization: Bearer <token>
+```
+
+| Status | Quando | `message` |
+|---|---|---|
+| 401 | Sem token, token inválido ou expirado | `Autenticação necessária` |
+| 403 | Perfil sem permissão para a rota | `Sem permissão para esta ação` |
+
+### Atalho de desenvolvimento (somente profile `dev`)
+
+Com o profile `dev` ativo no backend, é possível omitir o token e enviar o id do usuário:
+
+```
+X-Usuario-Dev: 1
+```
+
+A requisição é tratada como o usuário de id 1. **Fora do profile `dev`, o cabeçalho é ignorado.** Não usar em produção.
+
+### Formato padrão de erro
+
+Todos os erros de autenticação e autorização seguem este formato:
+
+```json
+{
+  "timestamp": "2026-10-10T17:54:38.683Z",
+  "status": 401,
+  "error": "Unauthorized",
+  "message": "E-mail ou senha inválidos",
+  "path": "/api/auth/login"
+}
+```=
 
 ---
 
