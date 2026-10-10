@@ -7,6 +7,7 @@ import br.com.camplana.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class UsuarioServiceImp implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Usuario create(Usuario usuario) {
@@ -21,14 +23,20 @@ public class UsuarioServiceImp implements UsuarioService {
             throw new ValidationException("Email já cadastrado.");
         }
 
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         return usuarioRepository.save(usuario);
     }
 
     @Override
     public Usuario findById(Integer id) {
         return usuarioRepository.findById(id)
-                .orElseThrow(() ->
-                        new BadRequestException("Usuário não encontrado."));
+                .orElseThrow(() -> new BadRequestException("Usuário não encontrado."));
+    }
+
+    @Override
+    public Usuario findByEmail(String email) {
+        return usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new BadRequestException("Usuário não encontrado."));
     }
 
     @Override
@@ -38,7 +46,6 @@ public class UsuarioServiceImp implements UsuarioService {
 
     @Override
     public Usuario update(Usuario usuario) {
-
         usuarioRepository.findByEmail(usuario.getEmail())
                 .ifPresent(usuarioExistente -> {
                     if (!usuarioExistente.getId().equals(usuario.getId())) {
@@ -49,8 +56,9 @@ public class UsuarioServiceImp implements UsuarioService {
     }
 
     @Override
-    public void remove(Integer id) {
+    public void desativar(Integer id) {
         Usuario usuario = findById(id);
-        usuarioRepository.delete(usuario);
+        usuario.setAtivo(false);
+        usuarioRepository.save(usuario);
     }
 }

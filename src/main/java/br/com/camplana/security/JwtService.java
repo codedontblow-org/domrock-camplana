@@ -8,7 +8,6 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
@@ -16,21 +15,23 @@ import java.time.temporal.ChronoUnit;
 @Service
 public class JwtService {
 
-    @Value("${api.security.token.secret:my-secret-key-just-in-case}")
-    private String secret;
-
     private static final String ISSUER = "camplana-api";
 
-    public String gerarToken(Usuario usuario) {
+    private final String secret;
+
+    public JwtService(@Value("${api.security.token.secret}") String secret) {
+        this.secret = secret;
+    }
+
+    public String gerarToken(Usuario usuario, ZonedDateTime validade) {
         try {
-            Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withIssuer(ISSUER)
                     .withSubject(usuario.getEmail())
                     .withClaim("id", usuario.getId())
                     .withClaim("perfil", usuario.getPerfil().name())
-                    .withExpiresAt(getExpirationDate().toInstant())
-                    .sign(algorithm);
+                    .withExpiresAt(validade.toInstant())
+                    .sign(Algorithm.HMAC256(secret));
         } catch (JWTCreationException exception) {
             throw new RuntimeException("Erro ao gerar token jwt", exception);
         }
@@ -38,8 +39,7 @@ public class JwtService {
 
     public String getSubject(String tokenJWT) {
         try {
-            Algorithm algorithm = Algorithm.HMAC256(secret);
-            return JWT.require(algorithm)
+            return JWT.require(Algorithm.HMAC256(secret))
                     .withIssuer(ISSUER)
                     .build()
                     .verify(tokenJWT)
