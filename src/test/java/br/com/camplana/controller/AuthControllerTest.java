@@ -4,6 +4,7 @@ import br.com.camplana.entity.Perfil;
 import br.com.camplana.entity.Usuario;
 import br.com.camplana.repository.UsuarioRepository;
 import br.com.camplana.security.JwtService;
+import br.com.camplana.security.PasswordConfig;
 import br.com.camplana.security.SecurityConfig;
 import br.com.camplana.handler.SecurityErrorHandler;
 import br.com.camplana.security.UsuarioDetailsService;
@@ -28,7 +29,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         controllers = AuthController.class,
         properties = "api.security.token.secret=segredo-de-teste-com-mais-de-32-caracteres"
 )
-@Import({SecurityConfig.class, SecurityErrorHandler.class, JwtService.class, UsuarioDetailsService.class})
+@Import({SecurityConfig.class, SecurityErrorHandler.class, JwtService.class,
+        UsuarioDetailsService.class, PasswordConfig.class})
 class AuthControllerTest {
 
     private static final String SENHA = "123456";

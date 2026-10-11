@@ -34,12 +34,6 @@ public class UsuarioServiceImp implements UsuarioService {
     }
 
     @Override
-    public Usuario findByEmail(String email) {
-        return usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new BadRequestException("Usuário não encontrado."));
-    }
-
-    @Override
     public Page<Usuario> listAll(Pageable pageable) {
         return usuarioRepository.findAll(pageable);
     }
@@ -53,12 +47,5 @@ public class UsuarioServiceImp implements UsuarioService {
                     }
                 });
         return usuarioRepository.save(usuario);
-    }
-
-    @Override
-    public void desativar(Integer id) {
-        Usuario usuario = findById(id);
-        usuario.setAtivo(false);
-        usuarioRepository.save(usuario);
     }
 }

@@ -24,7 +24,6 @@ public class UsuarioMapper {
         if (body.nome() != null)   usuario.setNome(body.nome());
         if (body.email() != null)  usuario.setEmail(body.email());
         if (body.perfil() != null) usuario.setPerfil(body.perfil());
-        if (body.ativo() != null)  usuario.setAtivo(body.ativo());
     }
 
     public UsuarioResponse toResponse(Usuario usuario) {

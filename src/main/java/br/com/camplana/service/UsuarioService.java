@@ -10,11 +10,7 @@ public interface UsuarioService {
 
     Usuario findById(Integer id);
 
-    Usuario findByEmail(String email);
-
     Page<Usuario> listAll(Pageable pageable);
 
     Usuario update(Usuario usuario);
-
-    void desativar(Integer id);
 }

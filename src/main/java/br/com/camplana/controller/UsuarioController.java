@@ -53,12 +53,6 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioMapper.toResponse(updatedUsuario));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> desativar(@PathVariable Integer id) {
-        usuarioService.desativar(id);
-        return ResponseEntity.noContent().build();
-    }
-
 }
 
 

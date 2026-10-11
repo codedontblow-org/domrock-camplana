@@ -12,7 +12,5 @@ public record UsuarioPutBody(
         @Size(max = 150, message = "Email deve ter no máximo 150 caracteres")
         String email,
 
-        Perfil perfil,
-
-        Boolean ativo
+        Perfil perfil
 ) {}

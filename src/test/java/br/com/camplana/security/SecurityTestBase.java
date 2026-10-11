@@ -30,7 +30,8 @@ import static org.mockito.Mockito.when;
                 ImportacaoController.class, UsuarioController.class},
         properties = "api.security.token.secret=segredo-de-teste-com-mais-de-32-caracteres"
 )
-@Import({SecurityConfig.class, SecurityErrorHandler.class, JwtService.class, UsuarioDetailsService.class})
+@Import({SecurityConfig.class, SecurityErrorHandler.class, JwtService.class,
+        UsuarioDetailsService.class, PasswordConfig.class})
 public abstract class SecurityTestBase {
 
     @Autowired protected MockMvc mockMvc;

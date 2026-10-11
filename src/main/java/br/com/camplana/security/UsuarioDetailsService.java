@@ -1,5 +1,6 @@
 package br.com.camplana.security;
 
+import br.com.camplana.repository.UsuarioRepository;
 import br.com.camplana.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NullMarked;
@@ -13,14 +14,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UsuarioDetailsService implements UserDetailsService {
 
-    private final UsuarioService usuarioService;
+    private final UsuarioRepository repository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        try {
-            return usuarioService.findByEmail(username);
-        } catch (RuntimeException e) {
-            throw new UsernameNotFoundException("Usuário não encontrado", e);
-        }
+        return repository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
     }
 }
