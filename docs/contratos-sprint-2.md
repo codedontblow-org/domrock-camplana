@@ -91,7 +91,7 @@ Todos os erros de autenticação e autorização seguem este formato:
   "message": "E-mail ou senha inválidos",
   "path": "/api/auth/login"
 }
-```=
+```
 
 ---
 
@@ -103,19 +103,36 @@ Define os contratos para o ciclo de vida da campanha, suportando controle de **s
 **`POST /api/campanhas`** (Cria nova versão se já existir em rascunho)
 
 **Request / Response (200 OK):**
+
 ```json
 {
-  "id": "camp-bf-2025-11",
-  "versao": 2,
-  "status": "RASCUNHO",
-  "titulo": "Black Friday 2025 - Vendedores e Gerentes",
-  "parametros": {
-    "periodo": { "data_inicio": "2025-11-24", "data_fim": "2025-11-30" },
-    "pct_acrescimo": 1.0,
-    "marcas_alvo": ["10", "20"],
-    "cargos_alvo": ["100", "150"],
-    "meta_vendas": 500000.00,
-    "orcamento_limite": 25000.00
+  "nome": "Black Friday 2025",
+  "chat_id": "c1f0a7e2",
+  "ficha": {
+    "rule_id": "draft-3fa9c1d2",
+    "tipo_regra": "BONUS_TEMPORARIO",
+    "raw_prompt": "Todas as vendas de 24/11 a 30/11 terão +1% de comissão, todas as marcas, exceto gerentes.",
+    "status": "DRAFT_PENDING_REVIEW",
+    "faltantes": [],
+    "parametros": [
+      { "key": "periodo", "label": "Prazo da Campanha", "type": "date_range", "categoria": "REGRA",
+        "value": { "data_inicio": "2025-11-24", "data_fim": "2025-11-30" }, "options": null, "required": true },
+      { "key": "pct_acrescimo", "label": "Acréscimo de Comissão (%)", "type": "percentage", "categoria": "REGRA",
+        "value": 1.0, "options": null, "required": true },
+      { "key": "marcas_alvo", "label": "Marcas Participantes", "type": "multi_select", "categoria": "REGRA",
+        "value": ["ALL"], "required": true },
+      { "key": "cargos_alvo", "label": "Cargos Elegíveis", "type": "multi_select", "categoria": "REGRA",
+        "value": ["100", "200", "300"], "required": true },
+      { "key": "meta_vendas", "label": "Meta Financeira da Campanha (R$)", "type": "currency", "categoria": "CONSTRAINT",
+        "value": 500000.00, "options": null, "required": true },
+      { "key": "orcamento_limite", "label": "Orçamento Máximo de Incentivo (R$)", "type": "currency", "categoria": "CONSTRAINT",
+        "value": 25000.00, "options": null, "required": true }
+    ]
+  },
+  "resultado": {
+    "rule_id": "draft-3fa9c1d2",
+    "totais": { "diferenca": 23736.10 },
+    "orcamento": { "orcamento_limite": 25000.00, "custo_incremental": 23736.10, "folga": 1263.90, "cabe_no_orcamento": true }
   }
 }
 ```
