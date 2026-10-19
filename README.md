@@ -207,7 +207,7 @@ domrock-camplana/
 ├── scripts/
 │   └── importar-dataset.sh     # carrega as bases no banco pelo backend
 ├── docker-compose.yml     # sobe PostgreSQL, backend, Lana e frontend
-├── .env.example           # variáveis (chaves de IA, portas)
+├── .env.example           # variáveis (segredo do login, chaves de IA, portas)
 ├── README.md
 └── LICENSE
 ```
@@ -215,7 +215,7 @@ domrock-camplana/
 ### 🏗️ Arquitetura
 
 ```text
-Navegador ──> Frontend (Vite, proxy /backend) ──> Backend Spring (/api/chat, /api/simulacoes)
+Navegador ──> Frontend (Vite, proxy /backend) ──> Backend Spring (/api/auth/login, /api/chat, /api/simulacoes)
                                                        │
                                                        ▼
                                    Lana FastAPI (/agent/invoke, /simulacao) ──> PostgreSQL
@@ -224,7 +224,7 @@ Navegador ──> Frontend (Vite, proxy /backend) ──> Backend Spring (/api/c
                                    Código Python da regra em subprocesso isolado
 ```
 
-O backend é a porta de entrada: repassa o chat e a simulação para a Lana por HTTP. A Lana consulta o banco com um papel somente leitura (`lana_leitura`), com guarda de SQL e limite de linhas. A documentação detalhada está em [Documentação de Arquitetura](docs/arquitetura.md).
+O backend é a porta de entrada: exige login (token JWT) e libera cada rota conforme o perfil (Gerente, Supervisor ou Administrador), depois repassa o chat e a simulação para a Lana por HTTP. A Lana consulta o banco com um papel somente leitura (`lana_leitura`), com guarda de SQL e limite de linhas. A documentação detalhada está em [Documentação de Arquitetura](docs/arquitetura.md).
 
 # ⚙️ Como Executar? <a id="como-executar"></a>
 
@@ -292,6 +292,7 @@ Se alguma porta já estiver em uso, troque no `.env` (`FRONTEND_HOST_PORT`, `BAC
 ### Usuários da demo
 
 Criados pela migração V4 do backend. Senha de todos: `123456` (só para a demonstração).
+Para chamar a API direto (ex.: com `curl`), faça login em `POST /api/auth/login` e envie o token no header `Authorization: Bearer <token>`; a matriz de permissões está no README do backend.
 
 | Nome | E-mail | Perfil |
 | --- | --- | --- |
