@@ -6,11 +6,11 @@ AVISO é carregado (se repetido, só a primeira ocorrência) e fica listado aqui
 
 ## Resumo
 
-- Linhas lidas da especificação: 34
-- Eventos válidos, carregados uma vez: 26
-- Pendências AVISO: 11
+- Linhas lidas da especificação: 35
+- Eventos válidos, carregados uma vez: 27
+- Pendências AVISO: 12
 - Pendências IMPEDITIVO: 1
-- Total em evento_rh: 26
+- Total em evento_rh: 27
 
 ## Pendências
 
@@ -22,6 +22,7 @@ AVISO é carregado (se repetido, só a primeira ocorrência) e fica listado aqui
 | Especificacao jul/2025 item g | MATRIC-293 | cod_loja / dias | Cobertura de loja sem intervalo de datas (10 dias na LOJA-5) | **AVISO** | Carregada; fica o alerta. |
 | Especificacao set/2025 item b | MATRIC-126 | origem | Afastamento repetido, já informado em mês anterior (18/08/2025 a 08/09/2025) | **AVISO** | Não carregada de novo; vale a primeira ocorrência. |
 | Especificacao set/2025 item c | MATRIC-137 | data_fim | Afastamento repetido com data final diferente da primeira ocorrência (26/08/2025 a 05/09/2025) | **AVISO** | Não carregada de novo; vale a primeira ocorrência. |
+| Especificacao set/2025 item h | MATRIC-62 | data_inicio | Demissão em 15/09/2025 informada pela especificação; a base não tem data de demissão | **AVISO** | Carregada; fica o alerta. |
 | Especificacao out/2025 item d | MATRIC-71 | data_fim | Licença maternidade sem data de término (a partir de 01/10/2025) | **AVISO** | Carregada; fica o alerta. |
 | Especificacao nov/2025 item a | MATRIC-179 | origem | Afastamento repetido, já informado em mês anterior (17/10/2025 a 20/11/2025) | **AVISO** | Não carregada de novo; vale a primeira ocorrência. |
 | Especificacao nov/2025 item c | MATRIC-71 | origem | Licença maternidade repetido, já informado em mês anterior (a partir de 01/10/2025) | **AVISO** | Não carregada de novo; vale a primeira ocorrência. |

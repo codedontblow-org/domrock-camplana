@@ -28,7 +28,7 @@ for _ in $(seq 1 60); do
   sleep 2
 done
 if [ "$pronto" != "t" ]; then
-  echo "Tabela evento_rh nao encontrada; suba o backend para o Flyway aplicar a V4." >&2
+  echo "Tabela evento_rh nao encontrada; suba o backend para o Flyway aplicar a V6." >&2
   exit 1
 fi
 

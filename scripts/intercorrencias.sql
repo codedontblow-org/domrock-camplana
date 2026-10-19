@@ -40,6 +40,8 @@ INSERT INTO stg_evento (matricula, tipo, data_inicio, data_fim, cod_loja, dias, 
 ('MATRIC-137', 'afastamento',         '2025-08-26', '2025-09-05', NULL,     NULL, 'Especificacao set/2025 item c'),
 ('MATRIC-17',  'ferias',              '2025-09-01', '2025-09-30', NULL,     NULL, 'Especificacao set/2025 item d'),
 ('MATRIC-127', 'ferias',              '2025-09-15', '2025-09-26', NULL,     NULL, 'Especificacao set/2025 item e'),
+-- item h corrige a demissao cadastrada; data_inicio = nova data de demissao (ver V6 no backend)
+('MATRIC-62',  'demissao',            '2025-09-15', NULL,         NULL,     NULL, 'Especificacao set/2025 item h'),
 -- OUTUBRO/2025
 ('MATRIC-179', 'afastamento',         '2025-10-17', '2025-11-20', NULL,     NULL, 'Especificacao out/2025 item a'),
 ('MATRIC-464', 'afastamento',         '2025-10-06', '2025-10-17', NULL,     NULL, 'Especificacao out/2025 item b'),
@@ -66,9 +68,11 @@ SELECT s.*,
            WHEN 'afastamento'         THEN 'Afastamento'
            WHEN 'ferias'              THEN 'Férias'
            WHEN 'licenca_maternidade' THEN 'Licença maternidade'
+           WHEN 'demissao'            THEN 'Demissão'
            ELSE 'Cobertura de loja'
        END AS rotulo,
        CASE
+           WHEN s.tipo = 'demissao'   THEN 'em ' || to_char(s.data_inicio, 'DD/MM/YYYY')
            WHEN s.data_inicio IS NULL THEN s.dias::text || ' dias'
            WHEN s.data_fim IS NULL    THEN 'a partir de ' || to_char(s.data_inicio, 'DD/MM/YYYY')
            ELSE to_char(s.data_inicio, 'DD/MM/YYYY') || ' a ' || to_char(s.data_fim, 'DD/MM/YYYY')
@@ -114,7 +118,16 @@ SELECT c.ordem, 'data_inicio', 'AVISO',
        c.rotulo || ' começa antes da admissão cadastrada (' || to_char(f.data_admissao, 'DD/MM/YYYY') || ')'
 FROM stg_classificado c
 JOIN funcionario f ON f.matricula = c.matricula
-WHERE c.data_inicio < f.data_admissao AND c.ocorrencia = 1;
+WHERE c.data_inicio < f.data_admissao AND c.ocorrencia = 1
+UNION ALL
+-- a base nao e alterada: o aviso mostra a data cadastrada que a apuracao vai substituir
+SELECT c.ordem, 'data_inicio', 'AVISO',
+       'Demissão em ' || to_char(c.data_inicio, 'DD/MM/YYYY') || ' informada pela especificação; '
+       || CASE WHEN f.data_demissao IS NULL THEN 'a base não tem data de demissão'
+               ELSE 'a base tem ' || to_char(f.data_demissao, 'DD/MM/YYYY') END
+FROM stg_classificado c
+JOIN funcionario f ON f.matricula = c.matricula
+WHERE c.tipo = 'demissao' AND f.data_demissao IS DISTINCT FROM c.data_inicio AND c.ocorrencia = 1;
 
 CREATE TEMP TABLE carga ON COMMIT DROP AS
 SELECT c.*
