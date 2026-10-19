@@ -122,7 +122,7 @@ Uma história é considerada concluída quando:
 | ----------------- | ------------- | ---------- |
 | Kick Off          | 24/08 a 28/08 | Finalizado |
 | 01                | 07/09 a 27/09 | Finalizado |
-| 02                | 05/10 a 25/10 | A fazer    |
+| 02                | 05/10 a 25/10 | Em andamento |
 | 03                | 02/11 a 22/11 | A fazer    |
 | Feira de Soluções | 03/12         | A fazer    |
 
