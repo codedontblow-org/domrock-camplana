@@ -195,7 +195,7 @@ https://github.com/user-attachments/assets/e0fafe44-9b95-4d7e-b080-081ebb5af7cb
 
 ## 📂 Estrutura do Projeto <a id="estrutura"></a>
 
-Este repositório reúne os três serviços como **submódulos Git**, apontando para a branch de integração da Sprint 1 (`feature/implementacao-do-fluxo-completo`, definida no `.gitmodules`).
+Este repositório reúne os três serviços como **submódulos Git**, apontando para a branch de integração `develop` de cada serviço (definida no `.gitmodules`).
 
 ```text
 domrock-camplana/
@@ -241,7 +241,7 @@ Não é preciso instalar Java, Node ou Python: tudo roda em containers.
 ```bash
 git clone --recurse-submodules https://github.com/codedontblow-org/domrock-camplana
 cd domrock-camplana
-git submodule update --init --remote   # garante a branch feature/implementacao-do-fluxo-completo
+git submodule update --init --remote   # garante a branch develop
 ```
 
 Para atualizar depois (novos commits na branch): `git submodule update --remote`.
@@ -262,6 +262,7 @@ cp .env.example .env
 | `AI_TIMEOUT_S` | `30` | Segundos por modelo antes de passar ao próximo |
 | `DB_USERNAME` / `DB_PASSWORD` | `postgres` / `postgres` | Banco local |
 | `LANA_DB_PASSWORD` | `lana_leitura` | Senha do papel somente leitura da Lana (criado pelo Flyway) |
+| `JWT_SECRET` | saída de `openssl rand -base64 48` | **Obrigatório.** Segredo que assina o token do login (mínimo 32 caracteres). Sem ele, o `docker compose` não sobe |
 
 ### 3. Subir tudo
 
@@ -275,7 +276,7 @@ docker compose up -d --build
 ./scripts/importar-dataset.sh
 ```
 
-Pode rodar logo depois do `docker compose up`: o script espera o backend terminar de subir e então envia RH, vendas e % de comissão de jul a dez/2025 para `POST /api/importacao` (leva cerca de 2 minutos). Os dados ficam no volume do Postgres, então não é preciso importar de novo ao reiniciar os containers. Se trocou a porta do backend, passe o endereço: `./scripts/importar-dataset.sh http://localhost:8081`. No Windows, rode pelo Git Bash ou WSL.
+Pode rodar logo depois do `docker compose up`: o script espera o backend terminar de subir, entra como Sérgio (Supervisor, o único perfil que importa) e então envia RH, vendas e % de comissão de jul a dez/2025 para `POST /api/importacao` (leva cerca de 2 minutos). Os dados ficam no volume do Postgres, então não é preciso importar de novo ao reiniciar os containers. Se trocou a porta do backend, passe o endereço: `./scripts/importar-dataset.sh http://localhost:8081`. No Windows, rode pelo Git Bash ou WSL.
 
 ### 5. Acessar
 
@@ -287,6 +288,17 @@ Pode rodar logo depois do `docker compose up`: o script espera o backend termina
 | PostgreSQL | `localhost:5432` |
 
 Se alguma porta já estiver em uso, troque no `.env` (`FRONTEND_HOST_PORT`, `BACKEND_HOST_PORT`, `LANA_HOST_PORT`, `POSTGRES_HOST_PORT`).
+
+### Usuários da demo
+
+Criados pela migração V4 do backend. Senha de todos: `123456` (só para a demonstração).
+
+| Nome | E-mail | Perfil |
+| --- | --- | --- |
+| Gabriela | gabriela@camplana.com.br | Gerente de Vendas |
+| Sérgio | sergio@camplana.com.br | Supervisor de Vendas |
+| Sílvia | silvia@camplana.com.br | Supervisor de Vendas |
+| Ana | ana@camplana.com.br | Administrador |
 
 ### Regras para testar
 

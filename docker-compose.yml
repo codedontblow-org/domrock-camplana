@@ -38,6 +38,9 @@ services:
       LANA_URL: http://lana:8000
       # Senha do papel somente leitura lana_leitura, criado pela migração V3 do Flyway.
       LANA_DB_PASSWORD: ${LANA_DB_PASSWORD:-lana_leitura}
+      # Segredo que assina o token do login. Sem padrão de propósito: segredo vazio
+      # deixaria o backend subir e só falhar no primeiro login.
+      JWT_SECRET: ${JWT_SECRET:?defina JWT_SECRET no .env (mínimo 32 caracteres; ex. openssl rand -base64 48)}
     ports:
       - "${BACKEND_HOST_PORT:-8080}:8080"
     restart: unless-stopped
