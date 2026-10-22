@@ -780,6 +780,7 @@ Qualquer outra transição → **409**, com o status atual e o pedido na `messag
 | Campo | Observação |
 |---|---|
 | `acoes` | O que **quem está vendo** pode fazer agora (tabela abaixo). O front mostra um botão por item e não deduz nada do status, do perfil ou do autor. Lista vazia = só leitura |
+| `periodo` | Da versão atual, quando a campanha já foi submetida e está fora de `RASCUNHO` (o número aprovado é o congelado); senão, da última simulação concluída. A `vigencia` usa esse período |
 | `versao_atual` | Número da última versão submetida; `null` se a campanha nunca foi submetida |
 | `ultima_simulacao` | A última simulação concluída da campanha. É ela que vira a próxima versão no submeter |
 | `versoes` | Uma por submissão, da mais antiga para a mais nova (aba "Versões" do A6-67) |
@@ -844,7 +845,7 @@ A lista e a rota usam a mesma regra no backend: uma ação fora de `acoes` receb
 ]
 ```
 
-- `custo_adicional` = `resultado.totais.diferenca` da última simulação.
+- `custo_adicional` = `resultado.totais.diferenca`, da mesma fonte do `periodo` (5.2): a versão atual fora de `RASCUNHO`, a última simulação concluída em `RASCUNHO`.
 
 ### 5.5. Fila do Supervisor
 
