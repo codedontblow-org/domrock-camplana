@@ -30,6 +30,12 @@ Mudança posterior neste contrato só por PR, com aviso no canal do time.
 | Marca, cargo e loja | código como texto | `"10"`, `"150"`, `"33"` |
 | Ids do banco | número | `12` |
 
+### Princípios
+
+- **Front burro.** O front mostra o que o backend manda: regra de negócio, filtro padrão, permissão e texto pronto ficam no backend. O que o usuário pode fazer vem em `acoes` (5.2 e 5.6), nunca deduzido no front a partir do status, do perfil ou do autor.
+- **Permissão por perfil só no `SecurityConfig`.** Rota de um perfil só tem caminho próprio (ex.: `/api/campanhas/fila`), e não um parâmetro na query string, que o `SecurityConfig` não enxerga. O que depende do dado (autor, status) fica no serviço.
+- **Números só da Lana.** O backend busca, grava e repassa; comissão, % vigente e conflitos vêm da Lana (2.3).
+
 ### Quem produz e quem consome
 
 | Seção | Produz | Consome |
@@ -107,14 +113,16 @@ Usuários do seed (migration V4), usados nos exemplos:
 | `/api/simulacoes/**` | GERENTE, SUPERVISOR | existe |
 | `POST /api/campanhas/*/decidir` | SUPERVISOR | existe |
 | `POST /api/campanhas/*/versoes/*/resimular` | SUPERVISOR | **falta** (A6-68) |
+| `GET /api/campanhas/fila` | SUPERVISOR | **falta** (A6-64) |
 | `/api/campanhas/**` | GERENTE, SUPERVISOR | existe |
 | `POST /api/correcoes/*/decidir` | SUPERVISOR | **falta** (A6-80) |
+| `GET /api/correcoes/fila` | SUPERVISOR | **falta** (A6-80) |
 | `/api/correcoes/**` | GERENTE, SUPERVISOR | **falta** (A6-80) |
 | `/api/avisos/**` | SUPERVISOR | **falta** (A6-82) |
 | `/api/usuarios/**` | ADMIN | existe |
 | `/api/importacao/**` | SUPERVISOR | existe |
 
-O `SecurityConfig` termina em `denyAll()`: rota nova sem linha na matriz devolve 403.
+O `SecurityConfig` termina em `denyAll()`: rota nova sem linha na matriz devolve 403. Vale a primeira linha que casa, então as rotas de um perfil só (`decidir`, `resimular`, `fila`) vêm antes do `/**` do mesmo prefixo.
 
 ---
 
@@ -615,12 +623,11 @@ Status: `PENDENTE` → `RODANDO` → `CONCLUIDA` ou `ERRO`. Uma simulação nunc
 ```json
 {
   "chat_id": "c1f0a7e2-5b1d-4e0a-9d3c-2f6b8a7e4c10",
-  "campanha_id": null,
   "regra": "<Regra 2.1>"
 }
 ```
 
-- `campanha_id`: `null` até salvar. Depois de salva, o front manda o id e a simulação fica ligada à campanha: é a última simulação concluída que o submeter usa (5.7).
+- Não há `campanha_id` no pedido: o backend acha a campanha pelo `chat_id` (uma conversa, uma campanha). Depois que a conversa vira campanha, toda simulação dela fica ligada à campanha, e a última concluída é a que o submeter usa (5.7).
 
 **Response (202 Accepted):**
 ```json
@@ -630,8 +637,8 @@ Status: `PENDENTE` → `RODANDO` → `CONCLUIDA` ou `ERRO`. Uma simulação nunc
 | Status | Quando |
 |---|---|
 | 400 | Corpo sem `regra` (já existe) |
-| 403 | Campanha ou conversa de outro usuário |
-| 409 | Campanha fora de `RASCUNHO`. A re-simulação da aprovação usa outra rota (5.9) |
+| 403 | Conversa de outro usuário |
+| 409 | A conversa já é uma campanha e ela está fora de `RASCUNHO`. A re-simulação da aprovação usa outra rota (5.9) |
 
 ### 4.2. Acompanhar
 
@@ -731,7 +738,7 @@ Qualquer outra transição → **409**, com o status atual e o pedido na `messag
 
 ### 5.2. Objeto Campanha
 
-É o que salvar, abrir e as ações do autor devolvem. Exemplo de uma campanha que teve a v1 reprovada:
+É o que salvar, abrir e as ações do autor devolvem. Exemplo de uma campanha que teve a v1 reprovada, vista pela autora (Gabriela):
 
 ```json
 {
@@ -740,6 +747,7 @@ Qualquer outra transição → **409**, com o status atual e o pedido na `messag
   "status": "REPROVADA",
   "vigencia": null,
   "em_simulacao": false,
+  "acoes": ["EDITAR", "ARQUIVAR"],
   "autor": { "id": 1, "nome": "Gabriela" },
   "chat_id": "c1f0a7e2-5b1d-4e0a-9d3c-2f6b8a7e4c10",
   "periodo": { "data_inicio": "2025-11-24", "data_fim": "2025-11-30" },
@@ -771,10 +779,20 @@ Qualquer outra transição → **409**, com o status atual e o pedido na `messag
 
 | Campo | Observação |
 |---|---|
+| `acoes` | O que **quem está vendo** pode fazer agora (tabela abaixo). O front mostra um botão por item e não deduz nada do status, do perfil ou do autor. Lista vazia = só leitura |
 | `versao_atual` | Número da última versão submetida; `null` se a campanha nunca foi submetida |
 | `ultima_simulacao` | A última simulação concluída da campanha. É ela que vira a próxima versão no submeter |
 | `versoes` | Uma por submissão, da mais antiga para a mais nova (aba "Versões" do A6-67) |
 | `log` | Toda mudança de status (`campanha_status_log`): quem, quando, de, para |
+
+| Ação | Aparece quando | Rota (5.7) |
+|---|---|---|
+| `RENOMEAR` | autor, campanha em `RASCUNHO` | `PUT /api/campanhas/{id}` |
+| `SUBMETER` | autor, em `RASCUNHO`, com simulação concluída que ainda não virou versão e nenhuma simulação rodando | `POST .../submeter` |
+| `EDITAR` | autor, em `REPROVADA` | `POST .../editar` |
+| `ARQUIVAR` | autor, em `RASCUNHO` ou `REPROVADA` | `POST .../arquivar` |
+
+A lista e a rota usam a mesma regra no backend: uma ação fora de `acoes` recebe o mesmo 403, 409 ou 400 que a rota daria. Aprovar e reprovar ficam nas `acoes` da versão (5.6).
 
 ### 5.3. Salvar
 
@@ -807,6 +825,9 @@ Qualquer outra transição → **409**, com o status atual e o pedido na `messag
 
 **`GET /api/campanhas/minhas`**, com o filtro opcional `?status=RASCUNHO`.
 
+- Sem `status`: todas as campanhas do usuário, **menos as arquivadas**, da atualizada mais recentemente para a mais antiga. Com `status`, só as daquele status (`?status=ARQUIVADA` traz as arquivadas). O front só repassa a aba escolhida.
+- `status` fora dos 5 valores da 5.1 → 400.
+
 ```json
 [
   {
@@ -827,11 +848,11 @@ Qualquer outra transição → **409**, com o status atual e o pedido na `messag
 
 ### 5.5. Fila do Supervisor
 
-**Situação:** nova (A6-68, A6-69).
+**Situação:** nova (A6-64, A6-69).
 
-**`GET /api/campanhas?status=AGUARDANDO_APROVACAO`**
+**`GET /api/campanhas/fila`**
 
-Só SUPERVISOR (GERENTE recebe 403). Devolve as versões que aguardam aprovação, **menos as que o próprio Supervisor submeteu**, das mais antigas para as mais novas. Nesta sprint, só esse valor de `status` é aceito aqui; outro valor → 400.
+Só SUPERVISOR (GERENTE recebe 403, pela linha própria no `SecurityConfig`). Devolve as versões que aguardam aprovação, **menos as que o próprio Supervisor submeteu**, das mais antigas para as mais novas.
 
 ```json
 [
@@ -859,13 +880,14 @@ Só SUPERVISOR (GERENTE recebe 403). Devolve as versões que aguardam aprovaçã
 
 Quem pode: o autor e, se a campanha tem ao menos uma versão submetida, os Supervisores. Outros recebem 403.
 
-**`GET /api/campanhas/{id}/versoes/{numero}`** → a versão congelada: o que o autor viu ao submeter. É a tela de decisão do A6-69.
+**`GET /api/campanhas/{id}/versoes/{numero}`** → a versão congelada: o que o autor viu ao submeter. É a tela de decisão do A6-69. Exemplo visto por Sérgio, com re-simulação pendente:
 
 ```json
 {
   "campanha_id": 12,
   "numero": 1,
   "status": "AGUARDANDO_APROVACAO",
+  "acoes": ["REPROVAR", "RESIMULAR"],
   "autor": { "id": 1, "nome": "Gabriela" },
   "submetida_em": "2026-10-21T13:05:00Z",
   "simulacao_id": 345,
@@ -884,8 +906,9 @@ Quem pode: o autor e, se a campanha tem ao menos uma versão submetida, os Super
 | Campo | Observação |
 |---|---|
 | `status` | Status da versão: `AGUARDANDO_APROVACAO`, `APROVADA` ou `REPROVADA` |
+| `acoes` | Para um SUPERVISOR que não é o autor, com a versão em `AGUARDANDO_APROVACAO`: `APROVAR`, `REPROVAR` e `RESIMULAR` (rotas 5.8 e 5.9). `APROVAR` não vem enquanto `resimulacao_necessaria` for `true`. Para os outros, lista vazia |
 | `ultima_mensagem_id` | A conversa congelada vai até essa mensagem (aba "Conversa" do A6-69, via 3.2) |
-| `resimulacao_necessaria` | `true` quando outra campanha que cruza o período foi aprovada depois da submissão e ainda não houve re-simulação. Com ela, o "Aprovar" fica desabilitado |
+| `resimulacao_necessaria` | `true` quando outra campanha que cruza o período foi aprovada depois da submissão e ainda não houve re-simulação. Com ela, `APROVAR` sai de `acoes` |
 | `aprovadas_depois` | Essas campanhas, para o aviso "Outra campanha deste período foi aprovada depois da submissão" |
 | `resimulacao` | Depois de 5.9: `{ "simulacao_id", "por", "em", "resultado" }`. A tela mostra o resultado antigo e o novo lado a lado |
 | `decisao` | `{ "decisao", "por", "em", "justificativa" }`, ou `null` enquanto aguarda |
@@ -894,12 +917,12 @@ Quem pode: o autor e, se a campanha tem ao menos uma versão submetida, os Super
 
 **Situação:** nova (A6-64).
 
-Todas devolvem a Campanha (5.2) atualizada. Só o `PUT` tem corpo.
+Todas devolvem a Campanha (5.2) atualizada. Só o `PUT` tem corpo. Cada uma corresponde a um item de `acoes` (5.2).
 
 | Rota | O que faz |
 |---|---|
-| `PUT /api/campanhas/{id}` | Renomeia: `{ "nome": "Black Friday 2025 - sem gerentes" }`. Só em `RASCUNHO`. A ficha não se edita aqui: o autor conversa e simula de novo com `campanha_id` (4.1), e a última simulação concluída vira a `ultima_simulacao` |
-| `POST /api/campanhas/{id}/submeter` | Cria a versão (número = maior + 1), congelando ficha, resultado, trilha e conversa até ali. Grava a mensagem de sistema "Enviado para análise — v1" e avisa os Supervisores (8). 400 se não houver simulação concluída |
+| `PUT /api/campanhas/{id}` | Renomeia: `{ "nome": "Black Friday 2025 - sem gerentes" }`. Só em `RASCUNHO`. A ficha não se edita aqui: o autor conversa e simula de novo na mesma conversa (4.1), e a última simulação concluída vira a `ultima_simulacao` |
+| `POST /api/campanhas/{id}/submeter` | Cria a versão (número = maior + 1), congelando ficha, resultado, trilha e conversa até ali. Grava a mensagem de sistema "Enviado para análise — v1" e avisa os Supervisores (8). 400 se não houver simulação concluída. 409 com simulação `PENDENTE` ou `RODANDO` (`Aguarde a simulação 346 terminar`). 400 se a última simulação concluída já virou a versão anterior (`Simule de novo antes de submeter: a v1 usou a simulação 345`) |
 | `POST /api/campanhas/{id}/editar` | `REPROVADA` → `RASCUNHO`. Grava "Voltou para rascunho — a próxima submissão será a v2" |
 | `POST /api/campanhas/{id}/arquivar` | `RASCUNHO` ou `REPROVADA` → `ARQUIVADA` |
 
@@ -932,7 +955,7 @@ Verificações, nesta ordem:
 | Reprovar com justificativa não vazia | 400 | `Justificativa obrigatória para reprovar` |
 | Sem `resimulacao_necessaria`, ou já re-simulada | 409 | `Simule de novo antes de aprovar` |
 
-As duas respostas 409 se distinguem pela `message`. A tela já sabe da re-simulação antes, pelo `resimulacao_necessaria` (5.6).
+As duas respostas 409 se distinguem pela `message`. A tela já sabe da re-simulação antes: enquanto ela falta, `APROVAR` não vem em `acoes` (5.6).
 
 ### 5.9. Re-simular na aprovação
 
@@ -1007,7 +1030,7 @@ Status: `PENDENTE`, `APROVADA`, `REPROVADA`.
 
 ### 6.2. Fila e detalhe
 
-- **`GET /api/correcoes?status=PENDENTE`**: só SUPERVISOR; lista as pendentes, menos as que o próprio Supervisor abriu.
+- **`GET /api/correcoes/fila`**: só SUPERVISOR (linha própria no `SecurityConfig`); lista as pendentes, menos as que o próprio Supervisor abriu.
 - **`GET /api/correcoes/{id}`**: o autor e os Supervisores. Com `origem: "LANA"`, a tela mostra "aberta pela Lana a pedido de Gabriela" e o link para a conversa.
 
 ### 6.3. Decidir
@@ -1145,3 +1168,4 @@ Quando uma campanha ou correção é submetida, cada Supervisor **ativo**, menos
 - 07/10/2026, Victor: primeira versão (PR #4).
 - 10/10 e 14/10/2026, Victor: login e salvar campanha, depois da revisão do PR.
 - 21/10/2026, Leonardo: aplica o restante da revisão do PR #4; alinha com o que já entrou na `develop` (chat por gRPC, importação, formato de erro); acrescenta conversa, job de simulação, versões, decisão, re-simulação, correção da base e avisos.
+- 21/10/2026, Leonardo: pente fino de arquitetura. Entram os princípios (front burro, permissão por perfil só no `SecurityConfig`, números só da Lana), `acoes` na campanha e na versão, as filas em rota própria (`/api/campanhas/fila` e `/api/correcoes/fila`), o filtro padrão de "minhas campanhas" e as regras do submeter; o `campanha_id` sai do pedido de simulação.
