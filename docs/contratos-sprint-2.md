@@ -345,7 +345,7 @@ O que muda:
 - `pessoas_no_piso`: quantas pessoas ficaram no piso de R$ 3.500 (só quem teve afastamento).
 - As contagens são da competência nov/2025 na base (19 admissões; afastamentos e férias da especificação). O número do piso é conferido no A6-77.
 
-**Exemplo 2: % vigente e conflitos** (critério do A6-74). A % base do gerente (150) da marca 10 é 1,00%. Estão aprovadas a Campanha A (+1,0%, de 20 a 30/11/2025) e a Campanha B (+0,5%, de 25/11 a 05/12/2025). Gabriela simula +0,5% de 24 a 30/11 para a marca 10, cargo 150:
+**Exemplo 2: % vigente e conflitos** (critério do A6-74). A % base do gerente (150) da marca 10 é 1,00%. Valem a campanha da especificação nov/25 item 5g (gerentes +0,5% de 24 a 30/11/2025, todas as marcas) e as aprovadas Campanha A (+1,0%, de 20 a 30/11/2025) e Campanha B (+0,5%, de 25/11 a 05/12/2025). Gabriela simula +0,5% de 24 a 30/11 para a marca 10, cargo 150:
 
 ```json
 {
@@ -353,8 +353,12 @@ O que muda:
     {
       "marca": "10", "cargo": "150",
       "data_inicio": "2025-11-24", "data_fim": "2025-11-24",
-      "pct_base": 1.00, "pct_vigente": 2.00, "pct_com_campanha": 2.50,
+      "pct_base": 1.00, "pct_vigente": 2.50, "pct_com_campanha": 3.00,
       "historico": [
+        { "campanha_id": null, "versao": null, "nome": "Especificação nov/25, item 5g",
+          "data_inicio": "2025-11-24", "data_fim": "2025-11-30", "pct_acrescimo": 0.5,
+          "autor": null, "aprovador": null, "aprovada_em": null,
+          "justificativa": "Gerentes: +0,5% nas vendas de 24 a 30/11 (Black Friday)" },
         { "campanha_id": 9, "versao": 1, "nome": "Campanha A",
           "data_inicio": "2025-11-20", "data_fim": "2025-11-30", "pct_acrescimo": 1.0,
           "autor": "Gabriela", "aprovador": "Sérgio", "aprovada_em": "2026-10-15T14:02:00Z",
@@ -364,8 +368,12 @@ O que muda:
     {
       "marca": "10", "cargo": "150",
       "data_inicio": "2025-11-25", "data_fim": "2025-11-30",
-      "pct_base": 1.00, "pct_vigente": 2.50, "pct_com_campanha": 3.00,
+      "pct_base": 1.00, "pct_vigente": 3.00, "pct_com_campanha": 3.50,
       "historico": [
+        { "campanha_id": null, "versao": null, "nome": "Especificação nov/25, item 5g",
+          "data_inicio": "2025-11-24", "data_fim": "2025-11-30", "pct_acrescimo": 0.5,
+          "autor": null, "aprovador": null, "aprovada_em": null,
+          "justificativa": "Gerentes: +0,5% nas vendas de 24 a 30/11 (Black Friday)" },
         { "campanha_id": 9, "versao": 1, "nome": "Campanha A",
           "data_inicio": "2025-11-20", "data_fim": "2025-11-30", "pct_acrescimo": 1.0,
           "autor": "Gabriela", "aprovador": "Sérgio", "aprovada_em": "2026-10-15T14:02:00Z",
@@ -378,6 +386,10 @@ O que muda:
     }
   ],
   "conflitos": [
+    { "campanha_id": null, "versao": null, "nome": "Especificação nov/25, item 5g", "status": "APROVADA", "autor": null,
+      "data_inicio": "2025-11-24", "data_fim": "2025-11-30",
+      "sobreposicao": { "data_inicio": "2025-11-24", "data_fim": "2025-11-30" },
+      "marcas": ["10"], "cargos": ["150"] },
     { "campanha_id": 9, "versao": 1, "nome": "Campanha A", "status": "APROVADA", "autor": "Gabriela",
       "data_inicio": "2025-11-20", "data_fim": "2025-11-30",
       "sobreposicao": { "data_inicio": "2025-11-24", "data_fim": "2025-11-30" },
@@ -393,7 +405,9 @@ O que muda:
 - **Trecho** = intervalo de datas em que a % vigente fica constante: o início e o fim de cada campanha cortam o período. Não é faixa de atingimento.
 - `comissao_periodo` tem um item por marca × cargo da campanha e por trecho. Sem campanhas no período: um item por marca × cargo, com `pct_vigente` = `pct_base` e `historico: []`.
 - `historico` = as campanhas aprovadas que levam da % base à vigente naquele trecho. É o "Por quê" do A6-75.
-- Regra de combinação: **soma** (provisória, estudo A6-73).
+- Regra de combinação: **soma com aviso** (estudo A6-73, provisória até a resposta do André). As campanhas da especificação contam como aprovadas.
+- Campanha da especificação aparece com o nome do item e com `campanha_id`, `versao`, `autor`, `aprovador` e `aprovada_em` nulos.
+- Só novembro tem venda com data dentro do mês (24 a 28/11). Nos outros meses toda venda está no dia 1º, então os trechos só fazem diferença em novembro.
 - `conflitos`: outra campanha aprovada ou aguardando aprovação, com período que cruza o desta e ao menos uma marca × cargo em comum. `marcas` e `cargos` são os que as duas têm em comum. Campanha que aguarda aprovação aparece com `status: "AGUARDANDO_APROVACAO"`, gera conflito, mas não entra na % vigente. `conflitos: []` = verificado e sem conflito.
 - Para o branch do A6-75: `comissoes_periodo` → `comissao_periodo`, `inicio`/`fim` → `data_inicio`/`data_fim`, `base` → `pct_base`, `vigente` → `pct_vigente`, `comCampanha` → `pct_com_campanha`, `acrescimo` → `pct_acrescimo`, `aprovadoEm` → `aprovada_em`, `id` (no histórico e no conflito) → `campanha_id`, `marca` (no conflito) → `marcas`. O `id` de cada linha de `comissao_periodo` sai. O conflito ganha `status`, `versao`, `autor` e `sobreposicao`.
 
