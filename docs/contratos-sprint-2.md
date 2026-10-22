@@ -355,12 +355,12 @@ O que muda:
       "data_inicio": "2025-11-24", "data_fim": "2025-11-24",
       "pct_base": 1.00, "pct_vigente": 2.50, "pct_com_campanha": 3.00,
       "historico": [
-        { "campanha_id": null, "versao": null, "nome": "Especificação nov/25, item 5g",
-          "data_inicio": "2025-11-24", "data_fim": "2025-11-30", "pct_acrescimo": 0.5,
+        { "campanha_id": null, "versao": null, "tipo": "ACRESCIMO", "nome": "Especificação nov/25, item 5g",
+          "data_inicio": "2025-11-24", "data_fim": "2025-11-30", "pct_acrescimo": 0.5, "pct_novo": null,
           "autor": null, "aprovador": null, "aprovada_em": null,
           "justificativa": "Gerentes: +0,5% nas vendas de 24 a 30/11 (Black Friday)" },
-        { "campanha_id": 9, "versao": 1, "nome": "Campanha A",
-          "data_inicio": "2025-11-20", "data_fim": "2025-11-30", "pct_acrescimo": 1.0,
+        { "campanha_id": 9, "versao": 1, "tipo": "ACRESCIMO", "nome": "Campanha A",
+          "data_inicio": "2025-11-20", "data_fim": "2025-11-30", "pct_acrescimo": 1.0, "pct_novo": null,
           "autor": "Gabriela", "aprovador": "Sérgio", "aprovada_em": "2026-10-15T14:02:00Z",
           "justificativa": "Reforço da última semana de novembro" }
       ]
@@ -370,31 +370,31 @@ O que muda:
       "data_inicio": "2025-11-25", "data_fim": "2025-11-30",
       "pct_base": 1.00, "pct_vigente": 3.00, "pct_com_campanha": 3.50,
       "historico": [
-        { "campanha_id": null, "versao": null, "nome": "Especificação nov/25, item 5g",
-          "data_inicio": "2025-11-24", "data_fim": "2025-11-30", "pct_acrescimo": 0.5,
+        { "campanha_id": null, "versao": null, "tipo": "ACRESCIMO", "nome": "Especificação nov/25, item 5g",
+          "data_inicio": "2025-11-24", "data_fim": "2025-11-30", "pct_acrescimo": 0.5, "pct_novo": null,
           "autor": null, "aprovador": null, "aprovada_em": null,
           "justificativa": "Gerentes: +0,5% nas vendas de 24 a 30/11 (Black Friday)" },
-        { "campanha_id": 9, "versao": 1, "nome": "Campanha A",
-          "data_inicio": "2025-11-20", "data_fim": "2025-11-30", "pct_acrescimo": 1.0,
+        { "campanha_id": 9, "versao": 1, "tipo": "ACRESCIMO", "nome": "Campanha A",
+          "data_inicio": "2025-11-20", "data_fim": "2025-11-30", "pct_acrescimo": 1.0, "pct_novo": null,
           "autor": "Gabriela", "aprovador": "Sérgio", "aprovada_em": "2026-10-15T14:02:00Z",
           "justificativa": "Reforço da última semana de novembro" },
-        { "campanha_id": 10, "versao": 1, "nome": "Campanha B",
-          "data_inicio": "2025-11-25", "data_fim": "2025-12-05", "pct_acrescimo": 0.5,
+        { "campanha_id": 10, "versao": 1, "tipo": "ACRESCIMO", "nome": "Campanha B",
+          "data_inicio": "2025-11-25", "data_fim": "2025-12-05", "pct_acrescimo": 0.5, "pct_novo": null,
           "autor": "Gabriela", "aprovador": "Sílvia", "aprovada_em": "2026-10-16T10:30:00Z",
           "justificativa": "Gerentes puxam a virada para dezembro" }
       ]
     }
   ],
   "conflitos": [
-    { "campanha_id": null, "versao": null, "nome": "Especificação nov/25, item 5g", "status": "APROVADA", "autor": null,
+    { "campanha_id": null, "versao": null, "tipo": "ACRESCIMO", "nome": "Especificação nov/25, item 5g", "status": "APROVADA", "autor": null,
       "data_inicio": "2025-11-24", "data_fim": "2025-11-30",
       "sobreposicao": { "data_inicio": "2025-11-24", "data_fim": "2025-11-30" },
       "marcas": ["10"], "cargos": ["150"] },
-    { "campanha_id": 9, "versao": 1, "nome": "Campanha A", "status": "APROVADA", "autor": "Gabriela",
+    { "campanha_id": 9, "versao": 1, "tipo": "ACRESCIMO", "nome": "Campanha A", "status": "APROVADA", "autor": "Gabriela",
       "data_inicio": "2025-11-20", "data_fim": "2025-11-30",
       "sobreposicao": { "data_inicio": "2025-11-24", "data_fim": "2025-11-30" },
       "marcas": ["10"], "cargos": ["150"] },
-    { "campanha_id": 10, "versao": 1, "nome": "Campanha B", "status": "APROVADA", "autor": "Gabriela",
+    { "campanha_id": 10, "versao": 1, "tipo": "ACRESCIMO", "nome": "Campanha B", "status": "APROVADA", "autor": "Gabriela",
       "data_inicio": "2025-11-25", "data_fim": "2025-12-05",
       "sobreposicao": { "data_inicio": "2025-11-25", "data_fim": "2025-11-30" },
       "marcas": ["10"], "cargos": ["150"] }
@@ -407,9 +407,42 @@ O que muda:
 - `historico` = as campanhas aprovadas que levam da % base à vigente naquele trecho. É o "Por quê" do A6-75.
 - Regra de combinação: **soma com aviso** (estudo A6-73, provisória até a resposta do André). As campanhas da especificação contam como aprovadas.
 - Campanha da especificação aparece com o nome do item e com `campanha_id`, `versao`, `autor`, `aprovador` e `aprovada_em` nulos.
+- `tipo` de cada campanha no histórico e nos conflitos: `ACRESCIMO` (soma `pct_acrescimo` à % do dia) ou `SUBSTITUICAO` (troca a % do dia por `pct_novo`). O campo que não se aplica vem `null`.
+- **% do dia** = a % da tabela, trocada pela substituição aprovada que cobre o dia, a marca e o cargo; com mais de uma, vale a aprovada por último, e a outra aparece em `conflitos`. Os acréscimos aprovados somam por cima (estudo A6-73).
+- Nesta sprint, só as campanhas da especificação substituem (ago/25 item 2h e set/25 item 3g). Campanha de substituição criada pelo usuário entra na Sprint 3.
 - Só novembro tem venda com data dentro do mês (24 a 28/11). Nos outros meses toda venda está no dia 1º, então os trechos só fazem diferença em novembro.
 - `conflitos`: outra campanha aprovada ou aguardando aprovação, com período que cruza o desta e ao menos uma marca × cargo em comum. `marcas` e `cargos` são os que as duas têm em comum. Campanha que aguarda aprovação aparece com `status: "AGUARDANDO_APROVACAO"`, gera conflito, mas não entra na % vigente. `conflitos: []` = verificado e sem conflito.
-- Para o branch do A6-75: `comissoes_periodo` → `comissao_periodo`, `inicio`/`fim` → `data_inicio`/`data_fim`, `base` → `pct_base`, `vigente` → `pct_vigente`, `comCampanha` → `pct_com_campanha`, `acrescimo` → `pct_acrescimo`, `aprovadoEm` → `aprovada_em`, `id` (no histórico e no conflito) → `campanha_id`, `marca` (no conflito) → `marcas`. O `id` de cada linha de `comissao_periodo` sai. O conflito ganha `status`, `versao`, `autor` e `sobreposicao`.
+- Para o branch do A6-75: `comissoes_periodo` → `comissao_periodo`, `inicio`/`fim` → `data_inicio`/`data_fim`, `base` → `pct_base`, `vigente` → `pct_vigente`, `comCampanha` → `pct_com_campanha`, `acrescimo` → `pct_acrescimo`, `aprovadoEm` → `aprovada_em`, `id` (no histórico e no conflito) → `campanha_id`, `marca` (no conflito) → `marcas`. O `id` de cada linha de `comissao_periodo` sai. O conflito ganha `status`, `versao`, `autor` e `sobreposicao`. Histórico e conflito ganham `tipo`, e o histórico ganha `pct_novo`.
+
+**Exemplo 3: substituição** (critério do A6-74). Em set/2025, a especificação (item 3g) manda a marca 10 usar a % da marca 20 em todos os cargos: o cargo 100 vai de 2,50% para 3,00%. Gabriela simula +0,5% em set/2025 para a marca 10, cargo 100:
+
+```json
+{
+  "comissao_periodo": [
+    {
+      "marca": "10", "cargo": "100",
+      "data_inicio": "2025-09-01", "data_fim": "2025-09-30",
+      "pct_base": 2.50, "pct_vigente": 3.00, "pct_com_campanha": 3.50,
+      "historico": [
+        { "campanha_id": null, "versao": null, "tipo": "SUBSTITUICAO", "nome": "Especificação set/25, item 3g",
+          "data_inicio": "2025-09-01", "data_fim": "2025-09-30", "pct_acrescimo": null, "pct_novo": 3.00,
+          "autor": null, "aprovador": null, "aprovada_em": null,
+          "justificativa": "Somente em set/25, a marca 10 usa a % da marca 20 em todos os cargos" }
+      ]
+    }
+  ],
+  "conflitos": [
+    { "campanha_id": null, "versao": null, "tipo": "SUBSTITUICAO", "nome": "Especificação set/25, item 3g",
+      "status": "APROVADA", "autor": null,
+      "data_inicio": "2025-09-01", "data_fim": "2025-09-30",
+      "sobreposicao": { "data_inicio": "2025-09-01", "data_fim": "2025-09-30" },
+      "marcas": ["10"], "cargos": ["100"] }
+  ]
+}
+```
+
+- `pct_base` continua sendo a % da tabela (2,50%); a substituição aparece na vigente (3,00%) e no histórico.
+- Exemplo real: a MATRIC-302 (marca 10, cargo 100, LOJA-14) vendeu R$ 51.366,29 em set/2025; com a 3g, a comissão atual dela é 3,00% × R$ 51.366,29 = R$ 1.540,99 (e não R$ 1.284,16 com 2,50%).
 
 ---
 
@@ -649,12 +682,12 @@ Quem pode: quem pediu e, se a simulação é de uma campanha com versão submeti
   "chat_id": "c1f0a7e2-5b1d-4e0a-9d3c-2f6b8a7e4c10",
   "regra": "<Regra 2.1>",
   "campanhas": [
-    { "campanha_id": 9, "versao": 1, "nome": "Campanha A", "status": "APROVADA",
+    { "campanha_id": 9, "versao": 1, "tipo": "ACRESCIMO", "nome": "Campanha A", "status": "APROVADA",
       "autor": "Gabriela", "aprovador": "Sérgio", "aprovada_em": "2026-10-15T14:02:00Z",
       "justificativa": "Reforço da última semana de novembro",
       "data_inicio": "2025-11-20", "data_fim": "2025-11-30",
       "pct_acrescimo": 1.0, "marcas_alvo": ["10"], "cargos_alvo": ["150"] },
-    { "campanha_id": 10, "versao": 1, "nome": "Campanha B", "status": "APROVADA",
+    { "campanha_id": 10, "versao": 1, "tipo": "ACRESCIMO", "nome": "Campanha B", "status": "APROVADA",
       "autor": "Gabriela", "aprovador": "Sílvia", "aprovada_em": "2026-10-16T10:30:00Z",
       "justificativa": "Gerentes puxam a virada para dezembro",
       "data_inicio": "2025-11-25", "data_fim": "2025-12-05",
@@ -666,6 +699,7 @@ Quem pode: quem pediu e, se a simulação é de uma campanha com versão submeti
 - `campanhas` (novo, A6-74): as campanhas aprovadas e as que aguardam aprovação que cruzam o período e têm ao menos uma marca × cargo em comum com a regra, **sem** a própria campanha que está sendo simulada. Vem da versão aprovada (ou submetida) de cada uma. Lista vazia = nenhuma.
 - As aprovadas entram na % vigente; as que aguardam aprovação só geram conflito.
 - Só entram campanhas criadas no sistema. As campanhas da especificação entram pelo A6-77 (ver o card).
+- Cada item leva `tipo`. Nesta sprint, as campanhas do sistema são sempre `ACRESCIMO`; na Sprint 3, uma `SUBSTITUICAO` virá com `pct_novo` no lugar de `pct_acrescimo`.
 
 **Response (200 OK):** o resultado (2.3), com a `trilha`. Erros: 422 com `{etapa, mensagem, erros?, codigo?}`, como hoje.
 
