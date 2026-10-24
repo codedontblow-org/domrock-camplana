@@ -659,10 +659,13 @@ Quem pode: quem pediu e, se a simulação é de uma campanha com versão submeti
   "criada_em": "2026-10-21T12:58:40Z",
   "concluida_em": null,
   "duracao_ms": null,
+  "ficha": "<Regra 2.1>",
   "resultado": null,
   "erro": null
 }
 ```
+
+- `ficha`: a regra (2.1) que foi simulada, como veio no pedido.
 
 **Concluída:** `status: "CONCLUIDA"`, `etapa: "Concluída"`, `concluida_em`, `duracao_ms` e `resultado` (2.3, com a `trilha` dentro).
 
@@ -677,6 +680,7 @@ Quem pode: quem pediu e, se a simulação é de uma campanha com versão submeti
 }
 ```
 
+- `erro.etapa` vinda do próprio backend: `lana_indisponivel` (Lana fora do ar), `tempo` (passou do read-timeout de 3 min), `erro_interno` (falha no backend ou resposta da Lana sem resultado) e `interrompida` (o backend reiniciou com a simulação em andamento). As outras vêm da Lana (ex.: `validacao`, `cota_llm`).
 - `etapa` é um texto para mostrar ao usuário. O backend só vê o começo e o fim da chamada à Lana, então nesta sprint as etapas são "Na fila", "Simulando", "Concluída" e "Erro". Etapas mais finas ("gerando código", "conferindo") dependem de a Lana informar progresso e ficam fora deste contrato.
 
 ### 4.3. Backend → Lana (`POST /simulacao`)
@@ -1170,3 +1174,4 @@ Quando uma campanha ou correção é submetida, cada Supervisor **ativo**, menos
 - 10/10 e 14/10/2026, Victor: login e salvar campanha, depois da revisão do PR.
 - 21/10/2026, Leonardo: aplica o restante da revisão do PR #4; alinha com o que já entrou na `develop` (chat por gRPC, importação, formato de erro); acrescenta conversa, job de simulação, versões, decisão, re-simulação, correção da base e avisos.
 - 21/10/2026, Leonardo: pente fino de arquitetura. Entram os princípios (front burro, permissão por perfil só no `SecurityConfig`, números só da Lana), `acoes` na campanha e na versão, as filas em rota própria (`/api/campanhas/fila` e `/api/correcoes/fila`), o filtro padrão de "minhas campanhas" e as regras do submeter; o `campanha_id` sai do pedido de simulação.
+- 24/10/2026, Leonardo: o 4.2 passa a listar a `ficha` na resposta e as etapas de erro do próprio backend, como entraram na A6-66.
