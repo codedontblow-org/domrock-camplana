@@ -260,6 +260,7 @@ Mostra de onde veio cada número: as ferramentas usadas, as consultas feitas, as
 | `tentativas` | número | tentativas de gerar o código (só na simulação; no chat, `null`) |
 | `premissas` | lista de textos | tiradas dos parâmetros e das ressalvas |
 | `passos` | lista | um item por ferramenta chamada ou por passo da simulação |
+| `campanhas` | lista | só na simulação (A6-74): as campanhas que compõem a % vigente em algum trecho, uma vez cada, no formato do item do `historico` (2.3). Na substituição pela % de outra marca (set/25, item 3g), `pct_novo` vem `null`, porque varia por cargo; o valor de cada cargo está no `historico` |
 
 Cada passo:
 
@@ -709,7 +710,7 @@ Quem pode: quem pediu e, se a simulação é de uma campanha com versão submeti
 
 - `campanhas` (novo, A6-74): as campanhas aprovadas e as que aguardam aprovação que cruzam o período e têm ao menos uma marca × cargo em comum com a regra, **sem** a própria campanha que está sendo simulada. Vem da versão aprovada (ou submetida) de cada uma. Lista vazia = nenhuma.
 - As aprovadas entram na % vigente; as que aguardam aprovação só geram conflito.
-- Só entram campanhas criadas no sistema. As campanhas da especificação entram pelo A6-77 (ver o card).
+- Só entram campanhas criadas no sistema. As da especificação (ago/25 item 2h; set/25 item 3g; out/25 item 4g; nov/25 itens 5f e 5g; dez/25 itens 6f e 6g) a Lana carrega sozinha: de um arquivo no A6-74 e de uma tabela no A6-77, sem mudar este pedido.
 - Cada item leva `tipo`. Nesta sprint, as campanhas do sistema são sempre `ACRESCIMO`; na Sprint 3, uma `SUBSTITUICAO` virá com `pct_novo` no lugar de `pct_acrescimo`.
 
 **Response (200 OK):** o resultado (2.3), com a `trilha`. Erros: 422 com `{etapa, mensagem, erros?, codigo?}`, como hoje.
@@ -1175,3 +1176,4 @@ Quando uma campanha ou correção é submetida, cada Supervisor **ativo**, menos
 - 21/10/2026, Leonardo: aplica o restante da revisão do PR #4; alinha com o que já entrou na `develop` (chat por gRPC, importação, formato de erro); acrescenta conversa, job de simulação, versões, decisão, re-simulação, correção da base e avisos.
 - 21/10/2026, Leonardo: pente fino de arquitetura. Entram os princípios (front burro, permissão por perfil só no `SecurityConfig`, números só da Lana), `acoes` na campanha e na versão, as filas em rota própria (`/api/campanhas/fila` e `/api/correcoes/fila`), o filtro padrão de "minhas campanhas" e as regras do submeter; o `campanha_id` sai do pedido de simulação.
 - 24/10/2026, Leonardo: o 4.2 passa a listar a `ficha` na resposta e as etapas de erro do próprio backend, como entraram na A6-66.
+- 24/10/2026, Leonardo: a trilha (2.2) ganha `campanhas` (A6-74); o 4.3 diz de onde a Lana tira as campanhas da especificação.
