@@ -16,15 +16,3 @@ Antes de iniciar uma tarefa, verificar:
 - [ ] Existem informações suficientes para estimar a tarefa.
 - [ ] Eventuais layouts, protótipos ou referências estão disponíveis.
 
-## Exemplo
-
-**Tarefa:** Criar tela de login.
-
-**Critérios de aceite:**
-
-- Usuário deve informar e-mail e senha.
-- O sistema deve validar os campos obrigatórios.
-- Credenciais inválidas devem apresentar uma mensagem de erro.
-- Credenciais válidas devem redirecionar o usuário para a página inicial.
-
-Quando todos os itens necessários estiverem definidos, a tarefa poderá ser considerada **Ready**.

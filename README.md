@@ -12,8 +12,6 @@
 <a href="#backlog">Backlog do Produto</a> |
 <a href="#sprint">Cronograma de Sprints</a> |
 <a href="#roadmap">Roadmap de Entregas</a> |
-<a href="#prototipo">Protótipo</a> |
-<a href="#demo">Demonstração</a> |
 <a href="#tecnologias">Tecnologias</a> |
 <a href="#estrutura">Estrutura do Projeto</a> |
 <a href="#como-executar">Como Executar?</a> |
@@ -66,12 +64,12 @@ A simulação é um _backtest_: aplica a regra sobre vendas que já aconteceram 
 | 3 | Alta | Como Gerente de Vendas, quero revisar e editar os parâmetros interpretados antes de simular, para corrigir erros de interpretação. | 8 | 1 | ✅ |
 | 4 | Alta | Como Gerente de Vendas, quero que o agente gere o artefato executável da simulação a partir dos parâmetros confirmados, para que a regra possa ser calculada sobre dados reais. | 13 | 1 | ✅ |
 | 5 | Alta | Como Gerente de Vendas, quero executar a simulação de um cenário de atingimento de meta, para ver o valor total de comissionamento resultante. | 8 | 1 | ✅ |
-| 6 | Alta | Como Supervisor de Vendas quero avaliar e aprovar ou reprovar com justificativa as regras de negócio criadas por outros usuários, para garantir que estejam alinhadas ao orçamento e aos objetivos da campanha antes serem executadas. | 8 | 2 |  |
-| 7 | Alta | Como Administrador do Sistema, quero poder criar, editar e excluir usuários para gerenciar quem usa o sistema. | 3 | 2 |  |
-| 8 | Alta | Como Gerente de Vendas, quero que o sistema disponha da base de vendas, metas e vendedores do período, para que a simulação tenha dados sobre os quais calcular. | 8 | 2 |  |
-| 9 | Alta | Como Supervisor de Vendas, quero propor correções pontuais na base cadastral e submetê-las ao mesmo fluxo de aprovação, para manter a base íntegra caso haja necessidade. | 8 | 2 |  |
-| 10 | Média | Como Usuário Autenticado, quero ver o status da minha regra (rascunho, em simulação, aguardando aprovação, aprovada, arquivada), para acompanhar em que etapa ela está. | 5 | 2 |  |
-| 11 | Média | Como Supervisor de Vendas, quero ser notificado quando uma regra ou uma correção na base cadastral for submetida para aprovação, para avaliá-la sem depender de checar o sistema manualmente e não atrasar o início da campanha. | 8 | 2 |  |
+| 6 | Alta | Como Supervisor de Vendas quero avaliar e aprovar ou reprovar com justificativa as regras de negócio criadas por outros usuários, para garantir que estejam alinhadas ao orçamento e aos objetivos da campanha antes serem executadas. | 8 | 2 | ✅ |
+| 7 | Alta | Como Administrador do Sistema, quero poder criar, editar e excluir usuários para gerenciar quem usa o sistema. | 3 | 2 |✅  |
+| 8 | Alta | Como Gerente de Vendas, quero que o sistema disponha da base de vendas, metas e vendedores do período, para que a simulação tenha dados sobre os quais calcular. | 8 | 2 | ✅ |
+| 9 | Alta | Como Supervisor de Vendas, quero propor correções pontuais na base cadastral e submetê-las ao mesmo fluxo de aprovação, para manter a base íntegra caso haja necessidade. | 8 | 2 | ✅ |
+| 10 | Média | Como Usuário Autenticado, quero ver o status da minha regra (rascunho, em simulação, aguardando aprovação, aprovada, arquivada), para acompanhar em que etapa ela está. | 5 | 2 | ✅ |
+| 11 | Média | Como Supervisor de Vendas, quero ser notificado quando uma regra ou uma correção na base cadastral for submetida para aprovação, para avaliá-la sem depender de checar o sistema manualmente e não atrasar o início da campanha. | 8 | 3 |  |
 | 12 | Alta | Como Supervisor de Vendas, quero um relatório com gráficos do resultado da apuração do comissionamento ao final da campanha, para visualizar o impacto financeiro real e comparar com o simulado. | 13 | 3 |  |
 | 13 | Alta | Como Supervisor de Vendas, quero que o sistema sinalize automaticamente valores de comissionamento com desvio relevante em relação à média histórica (ex: vendas muito acima do esperado), para que eu possa analisar possíveis inconsistências. | 13 | 3 |  |
 | 14 | Alta | Como Supervisor de Vendas, quero poder visualizar os logs de edições e aprovações, para acompanhar o histórico de mudanças e garantir rastreabilidade | 8 | 3 |  |
@@ -84,47 +82,18 @@ A simulação é um _backtest_: aplica a regra sobre vendas que já aconteceram 
 
 **Perfis:** o **Gerente de Vendas** cria regras e solicita mudanças; o **Supervisor de Vendas** cria e aprova regras e mudanças; o **Administrador** apenas gerencia usuários, sem acesso a simulações, edições ou aprovações.
 
-<!--
-## :bomb: DoR - Definition of Ready <a id="dor"></a>
-
-Uma história está pronta para entrar em desenvolvimento quando:
-
-- [ ] A história possui identificador único.
-- [ ] O objetivo está claramente descrito.
-- [ ] Os critérios de aceitação estão definidos.
-- [ ] A regra de negócio está compreendida.
-- [ ] As dependências foram identificadas.
-- [ ] As dúvidas relevantes foram esclarecidas.
-- [ ] O Product Owner validou o escopo.
-- [ ] A equipe possui informações suficientes para iniciar o desenvolvimento.
-
-## :boom: DoD - Definition of Done <a id="dod"></a>
-
-Uma história é considerada concluída quando:
-
-- [ ] Implementação realizada.
-- [ ] Critérios de aceitação atendidos.
-- [ ] Testes executados com sucesso.
-- [ ] Código revisado.
-- [ ] Pull Request aberto.
-- [ ] Code Review realizado.
-- [ ] Ajustes solicitados no review concluídos.
-- [ ] Documentação atualizada quando necessário.
-- [ ] Pull Request aprovado.
-- [ ] Código integrado à branch principal.
--->
 
 ---
 
 ## 📅 Cronograma de Sprints <a id="sprint"></a>
 
-| Sprint            | Período       | Status     |
-| ----------------- | ------------- | ---------- |
-| Kick Off          | 24/08 a 28/08 | Finalizado |
-| 01                | 07/09 a 27/09 | Finalizado |
-| 02                | 05/10 a 25/10 | A fazer    |
-| 03                | 02/11 a 22/11 | A fazer    |
-| Feira de Soluções | 03/12         | A fazer    |
+| Sprint            | Período       | Status     | Documentação |
+| ----------------- | ------------- | ---------- | ----------   |
+| Kick Off          | 24/08 a 28/08 | Finalizado |              |
+| 01                | 07/09 a 27/09 | Finalizado |[Ver documentação](./docs/backlogs/sprint-1/README.md)    |
+| 02                | 05/10 a 25/10 | Finalizado |[Ver documentação](./docs/backlogs/sprint-2/README.md)    |
+| 03                | 02/11 a 22/11 | A fazer    | A fazer      |
+| Feira de Soluções | 03/12         | A fazer    |              |
 
 ---
 
@@ -137,18 +106,7 @@ O cronograma abaixo apresenta visualmente a evolução planejada das principais 
 <img src = "assets\Roadmap.png"> 
 
 ---
-
-## 📋 Protótipo da Aplicação <a id="prototipo"></a>
-
-<div align="center"> 
-<table>
-  <tr>
-<th> <img src = "docs\prototipo\tela-1.png"> </th>
-<th> <img src = "docs\prototipo\tela-2.png"> </th>
-</tr> 
-</table> 
-</div>
-
+<!--
 ## 🎥 Demonstração
 
 <a id="demo"></a>
@@ -161,7 +119,6 @@ https://github.com/user-attachments/assets/e0fafe44-9b95-4d7e-b080-081ebb5af7cb
 ### • SPRINT 3
 > Em breve!
 
-<!--
 | Sprint   | Entregas | Vídeo do incremento |
 | -------- | -------- | ------------------- |
 | Sprint 1 | 🚧       | 🚧                  |

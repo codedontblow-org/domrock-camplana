@@ -3,7 +3,7 @@
 ## Documentação — Sprint 1
 
 ## Desafio <a id="desafio"></a>
-Chat inteligente voltado à interação com regras de negócio, permitindo sua identificação e interpretação para simulação.
+Desenvolver um chat inteligente capaz de interpretar regras de negócio em linguagem natural, permitir a revisão dos parâmetros identificados e executar simulações de comissionamento. Entregar um fluxo funcional que transforme as descrições do Gerente de Vendas em regras executáveis e apresente os resultados do cálculo de comissões para os cenários simulados.
 
 ## Backlog da Sprint
 
@@ -25,7 +25,6 @@ Critérios utilizados para verificar se uma história está suficientemente prep
 | :----------------------------- | :--------------------------------------------------------------------------------------------------------------------------------- |
 | Clareza da descrição           | A User Story apresenta de forma clara a pessoa usuária, a ação desejada e o objetivo a ser alcançado.                              |
 | Critérios de aceitação         | A história possui critérios objetivos que definem as condições necessárias para sua conclusão.                                     |
-| Cenários de teste              | A história possui pelo menos um cenário de teste estruturado em Dado, Quando e Então.                                              |
 | Referência visual              | O protótipo ou material visual necessário para a implementação está disponível, quando aplicável.                                  |
 | Escopo técnico definido        | Está especificado se a história envolve frontend, backend, IA ou integração entre esses componentes.                               |
 | Regras de negócio definidas    | As regras de comissionamento, entradas, resultados esperados e possíveis exceções estão descritas e compreendidas.                 |
@@ -44,3 +43,23 @@ Critérios utilizados para verificar se uma história foi desenvolvida, testada 
 | Funcionalidade integrada         | A funcionalidade foi integrada à aplicação e testada dentro do fluxo correspondente.                       |
 | Documentação atualizada          | As documentações, regras e instruções impactadas pela implementação foram atualizadas.                     |
 | Validação funcional pelo PO      | O Product Owner verificou a funcionalidade e confirmou que a história atende ao que foi definido.          |
+
+
+## 🎥 Demonstração
+
+<a id="demo"></a>
+
+### • SPRINT 1
+https://github.com/user-attachments/assets/e0fafe44-9b95-4d7e-b080-081ebb5af7cb 
+
+
+## 📋 Protótipo da Aplicação <a id="prototipo"></a>
+
+<div align="center"> 
+<table>
+  <tr>
+<th> <img src = "docs\prototipo\tela-1.png"> </th>
+<th> <img src = "docs\prototipo\tela-2.png"> </th>
+</tr> 
+</table> 
+</div>
