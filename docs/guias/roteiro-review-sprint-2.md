@@ -35,18 +35,21 @@ Todas as senhas dos usuários de demonstração são: **`123456`**.
 3. **Fala do Apresentador:**
    > *"Nesta Sprint 2, implementamos autenticação segura via JWT com controle de perfis. A Gabriela é Gerente de Vendas e sua missão é estruturar incentivos comerciais viáveis financeiramente."*
 
-### 1.2 "Minhas Campanhas" e Ciclo de Vida
+### 1.2 "Minhas Campanhas", Ciclo de Vida e Filtro de Arquivadas
 1. Clique no menu lateral **Minhas Campanhas** (`/campanhas`).
 2. **Fala do Apresentador:**
-   > *"Aqui a Gabriela acompanha o portfólio completo de campanhas. Temos os 4 estados do ciclo de vida que demonstram o fluxo de negócio:"*
+   > *"Aqui a Gabriela acompanha o portfólio completo de campanhas. Temos os estados do ciclo de vida que demonstram o fluxo de negócio:"*
    - **`RASCUNHO` ("Campanha Fim de Ano - Rascunho"):**
      > *"Esta campanha foi criada e simulada, mas ainda não foi enviada para aprovação. O autor pode renomeá-la, arquivá-la ou submetê-la."*
    - **`AGUARDANDO_APROVACAO` ("Campanha Virada de Novembro"):**
      > *"Submetida pela Gabriela. A versão v1 foi congelada com a ficha de parâmetros e o resultado exato daquele momento, e está aguardando avaliação da supervisão."*
-   - **`APROVADA` ("Black Friday 2025 - Aprovada"):**
-     > *"Campanha já avaliada e aprovada pela supervisora Sílvia, pronta para vigência."*
+   - **`APROVADA` ("Black Friday 2025 - Aprovada" e "Campanha de Inverno - Julho 2025"):**
+     > *"Campanhas já avaliadas e aprovadas, prontas para vigência."*
    - **`REPROVADA` ("Acréscimo de Agosto - Reprovada"):**
      > *"Foi reprovada pelo supervisor Sérgio. Veja que o botão 'Editar' permite que a Gabriela devolva a campanha para Rascunho e elabore a versão v2 corrigida."*
+3. **Passo: Filtro de Arquivadas (Contrato 5.4):**
+   - Mostre que, por padrão (sem filtro), a listagem exibe 6 campanhas e esconde as arquivadas para não poluir a visão operacional.
+   - Clique no filtro **Arquivada**: a campanha *"Incentivo Setembro - Arquivada"* é exibida (submetida, reprovada pela Sílvia com justificativa e arquivada pela Gabriela).
 
 ### 1.3 Detalhes da Campanha e Trilha de Números ("De onde vieram esses números?")
 1. Clique na **"Black Friday 2025 - Aprovada"** ou na **"Campanha Virada de Novembro"**.
@@ -58,6 +61,13 @@ Todas as senhas dos usuários de demonstração são: **`123456`**.
    - **Fala do Apresentador:**
      > *"Nenhum número vem direto de uma LLM. A Lana calcula o baseline diretamente sobre o banco PostgreSQL, gera o código da regra, valida em cálculo determinístico e registra cada tabela consultada e cada conferência de consistência."*
 
+### 1.4 Histórico de Versões da Campanha
+1. Volte para **Minhas Campanhas** e clique na **"Campanha Outubro - Dia das Crianças"** (em `AGUARDANDO_APROVACAO`).
+2. Clique na aba **Versões**:
+   - Mostre o histórico completo das duas versões:
+     - **v1:** submetida inicialmente (+2,0%), reprovada pelo Sérgio com justificativa visível (*"O percentual de 2.0% excede o limite financeiro..."*);
+     - A campanha retornou a Rascunho, foi re-simulada (+1,0%, marcas ajustadas) e submetida como **v2**, atualmente em avaliação.
+
 ---
 
 ## 2. Parte 2 — Sérgio e Sílvia (Supervisores de Vendas): Fila de Aprovação Quatro-Olhos e Importação
@@ -68,7 +78,20 @@ Todas as senhas dos usuários de demonstração são: **`123456`**.
 1. No menu inferior esquerdo, faça logout da Gabriela.
 2. Faça login com: **`sergio@camplana.com.br`** / **`123456`**.
 
-### 2.2 Fila de Aprovação e Conflito de Sobreposição
+### 2.2 Quatro Olhos: A Campanha do Sérgio
+1. Como Sérgio, acesse **Minhas Campanhas** (`/campanhas`) e abra a sua campanha **"Incentivo Natal Antecipado - Supervisão"** (`AGUARDANDO_APROVACAO`).
+2. **Fala do Apresentador:**
+   > *"Demonstração dos quatro olhos: o Sérgio é supervisor, mas por ser o autor desta campanha, ele não possui o botão de Aprovar. A aprovação precisa vir de outro supervisor."*
+3. Acesse o menu **Campanhas / Aprovações** (`/campanha`):
+   - A fila de aprovação do Sérgio lista as campanhas dos outros usuários ('Campanha Virada de Novembro' e 'Dia das Crianças' v2), mas exclui a sua própria.
+
+### 2.3 Quatro Olhos: A Sílvia Pode Aprovar a Campanha do Sérgio
+1. Faça logout do Sérgio e entre como: **`silvia@camplana.com.br`** / **`123456`**.
+2. Acesse **Campanhas / Aprovações** (`/campanha`):
+   - Na fila da Sílvia, a campanha **"Incentivo Natal Antecipado - Supervisão"** aparece listada (3 campanhas na fila).
+   - Ao abrir o painel de aprovação, a Sílvia tem disponíveis os botões de **Aprovar**, **Devolver** e **Simular de novo**.
+
+### 2.4 Fila de Aprovação e Conflito de Sobreposição
 1. Acesse o menu **Campanhas / Aprovações** (`/campanha`).
 2. **Fala do Apresentador:**
    > *"Na fila do Sérgio, aparece a 'Campanha Virada de Novembro' submetida pela Gabriela. Note o princípio quatro-olhos: o autor não aprova a própria campanha. Além disso, o sistema sinalizou '1 Conflito'!"*
@@ -79,12 +102,12 @@ Todas as senhas dos usuários de demonstração são: **`123456`**.
    - Clique em **Reprovar**: mostre que o sistema exige o preenchimento de justificativa obrigatória;
    - Mostre o botão de **Aprovar** e o botão de **Re-simular** (caso novas campanhas tenham sido aprovadas no mesmo intervalo).
 
-### 2.3 Matriz de % Vigente
+### 2.5 Matriz de % Vigente
 1. Acesse o menu **% Vigente** (`/vigente`).
 2. **Fala do Apresentador:**
    > *"Aqui o supervisor tem a visão consolidada de todas as marcas e cargos da Dom Rock, enxergando a taxa base e o percentual efetivo vigente resultante das campanhas ativas."*
 
-### 2.4 Importação da Base Mensal de Dados
+### 2.6 Importação da Base Mensal de Dados
 1. Acesse o menu **Importar Bases** (`/importar`).
 2. **Fala do Apresentador:**
    > *"A importação das bases mensais é responsabilidade do Supervisor. O sistema processa os arquivos de forma assíncrona, com validação atômica — se houver pendência impeditiva, nada é gravado."*
