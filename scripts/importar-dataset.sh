@@ -91,8 +91,15 @@ for mes in "${MESES[@]}"; do
   fi
 
   echo "Job #$JOB_ID criado para $mes. Aguardando processamento..."
+  TENTATIVAS=0
   while true; do
     sleep 3
+    # Um job preso em PROCESSANDO não pode travar a preparação da demo para sempre.
+    TENTATIVAS=$((TENTATIVAS + 1))
+    if [ "$TENTATIVAS" -gt 200 ]; then
+      echo "Erro: Job #$JOB_ID ($mes) segue em PROCESSANDO após 10 min (esperado: cerca de 1 min por mês); confira os logs do backend." >&2
+      exit 1
+    fi
     JOB_DATA=$(curl --silent --show-error -X GET "$BACKEND/api/importacao/$JOB_ID" \
       -H "Authorization: Bearer $TOKEN")
 

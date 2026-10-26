@@ -152,12 +152,23 @@ Para carregar os dados e deixar o sistema pronto para apresentação em segundos
 O script realiza:
 1. Verificação de prontidão do backend;
 2. Importação de todos os meses da Dom Rock (julho a dezembro de 2025) com RH, Vendas e Comissão;
-3. Criação de cenários de demonstração (campanhas em `RASCUNHO`, `AGUARDANDO_APROVACAO`, `APROVADA` e `REPROVADA`, com simulações e logs reais).
+3. Carga das intercorrências de RH (`./scripts/importar-intercorrencias.sh`, ver 6.1);
+4. Criação de cenários de demonstração (campanhas em `RASCUNHO`, `AGUARDANDO_APROVACAO`, `APROVADA` e `REPROVADA`, com simulações e logs reais).
 
 > **Dica para ensaios rápidos:** Caso já tenha importado as planilhas e queira apenas restaurar o estado limpo das campanhas da demo, use:
 > ```bash
 > ./scripts/seed-demo.sh --so-campanhas
 > ```
+
+### 6.1 Carga das intercorrências de RH (jul a dez/2025)
+
+O `seed-demo.sh` completo já roda este passo. Para rodá-lo sozinho, com o dataset principal já importado, execute a carga das intercorrências e gere o relatório de pendências:
+
+```bash
+./scripts/importar-intercorrencias.sh
+```
+
+Nota de idempotência: O script pode ser reexecutado de forma segura sem duplicação de dados em evento_rh. O relatório gerado fica em docs/relatorio-pendencias-intercorrencias.md.
 
 ---
 

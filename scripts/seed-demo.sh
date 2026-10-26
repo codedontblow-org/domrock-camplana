@@ -54,6 +54,8 @@ else
   echo ""
   echo "--- Passo 1/2: Importando dataset jul-dez/2025 ---"
   "$SCRIPT_DIR/importar-dataset.sh" "$BACKEND"
+  # As intercorrências de RH (A6-76) dependem dos funcionários recém-importados.
+  "$SCRIPT_DIR/importar-intercorrencias.sh"
 fi
 
 # 2. Aplicação do seed de campanhas via docker compose
@@ -74,7 +76,8 @@ if [ -n "${COMPOSE_FILE:-}" ]; then
   done
 fi
 
-"${COMPOSE[@]}" exec -T postgres psql -U "${DB_USERNAME:-postgres}" -d "${POSTGRES_DB:-camplana}" < "$SCRIPT_DIR/seed-demo.sql"
+# ON_ERROR_STOP: sem ele o psql sai com 0 mesmo quando a transação cai em ROLLBACK.
+"${COMPOSE[@]}" exec -T postgres psql -v ON_ERROR_STOP=1 -U "${DB_USERNAME:-postgres}" -d "${POSTGRES_DB:-camplana}" < "$SCRIPT_DIR/seed-demo.sql"
 
 echo "Seed SQL aplicado com sucesso!"
 
