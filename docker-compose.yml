@@ -4,7 +4,7 @@
 #   cp .env.example .env                    # preencha a IA (AI_PROVIDER, AI_MODEL e a chave)
 #   docker compose up -d --build
 #   ./scripts/importar-dataset.sh           # só na primeira vez: carrega jul-dez/2025 no banco
-# Portas do host trocáveis no .env (POSTGRES_HOST_PORT, BACKEND_HOST_PORT, LANA_HOST_PORT, FRONTEND_HOST_PORT).
+# Portas do host trocáveis no .env (POSTGRES_HOST_PORT, BACKEND_HOST_PORT, LANA_HOST_PORT, LANA_GRPC_HOST_PORT, FRONTEND_HOST_PORT).
 
 services:
   postgres:
@@ -38,6 +38,11 @@ services:
       LANA_URL: http://lana:8000
       # Senha do papel somente leitura lana_leitura, criado pela migração V3 do Flyway.
       LANA_DB_PASSWORD: ${LANA_DB_PASSWORD:-lana_leitura}
+      # Chave secreta para assinatura dos tokens JWT da API (troque fora de dev/demo).
+      JWT_SECRET: ${JWT_SECRET:-camplana-segredo-jwt-desenvolvimento-sprint-2-2026}
+      # Servidor gRPC da Lana para o chat e análise de regras.
+      GRPC_LANA_HOST: ${GRPC_LANA_HOST:-lana}
+      GRPC_LANA_PORT: ${GRPC_LANA_PORT:-50051}
     ports:
       - "${BACKEND_HOST_PORT:-8080}:8080"
     restart: unless-stopped
@@ -64,6 +69,7 @@ services:
       DATABASE_URL: postgresql://lana_leitura:${LANA_DB_PASSWORD:-lana_leitura}@postgres:5432/camplana
     ports:
       - "${LANA_HOST_PORT:-8000}:8000"
+      - "${LANA_GRPC_HOST_PORT:-50051}:50051"
     volumes:
       # Código montado: alterações na Lana recarregam sem rebuild (uvicorn --reload).
       - ./DomRock-Lana:/app
