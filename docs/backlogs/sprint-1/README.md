@@ -3,7 +3,13 @@
 ## Documentação — Sprint 1
 
 ## Desafio <a id="desafio"></a>
-Desenvolver um chat inteligente capaz de interpretar regras de negócio em linguagem natural, permitir a revisão dos parâmetros identificados e executar simulações de comissionamento. Entregar um fluxo funcional que transforme as descrições do Gerente de Vendas em regras executáveis e apresente os resultados do cálculo de comissões para os cenários simulados.
+Desenvolver um chat inteligente capaz de interpretar regras de negócio em linguagem natural, permitir a revisão dos parâmetros identificados e executar simulações de comissionamento. 
+<br>
+Meta da Sprint: entregar um fluxo funcional que transforme as descrições do Gerente de Vendas em regras executáveis e apresente os resultados do cálculo de comissões para os cenários simulados.
+
+| Capacidade estimada | Meta da Sprint |  Previsão das Sprints (extras) | 
+| :--: | :--------: | :--- |
+| 47 | User stories de rank 1, 2, 3, 4 |  User story de rank 5 | 
 
 ## Backlog da Sprint
 
@@ -58,8 +64,8 @@ https://github.com/user-attachments/assets/e0fafe44-9b95-4d7e-b080-081ebb5af7cb
 <div align="center"> 
 <table>
   <tr>
-<th> <img src = "docs\prototipo\tela-1.png"> </th>
-<th> <img src = "docs\prototipo\tela-2.png"> </th>
+<th> <img src = "../../prototipo/tela-1.png"> </th>
+<th> <img src = "../../prototipo/tela-2.png"> </th>
 </tr> 
 </table> 
 </div>

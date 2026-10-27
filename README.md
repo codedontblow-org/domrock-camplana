@@ -7,6 +7,7 @@
 
 <div align="center">
 
+<a href="#dor">Dor do Cliente</a> |
 <a href="#desafio">Desafio</a> |
 <a href="#mvp">Solução</a> |
 <a href="#backlog">Backlog do Produto</a> |
@@ -18,9 +19,6 @@
 <a href="#manual">Documentações</a> |
 <a href="#team">Equipe</a>
 
-<!-- <a href="#dor">DoR</a> |
-<a href="#dod">DoD</a> | -->
-
 </div>
 
 ---
@@ -28,12 +26,13 @@
 > Status do Projeto: Em andamento! 🚧
 
 ---
+## 😵​ Dor do Cliente: <a id="dor"></a>
+Empresas possuem regras de negócio que mudam constantemente devido a novos produtos, alterações de preços, campanhas de vendas e mudanças em acordos comerciais com parceiros e fornecedores. Entretanto, essas regras muitas vezes não são registradas ou organizadas adequadamente, dificultando sua utilização, manutenção e rastreabilidade.
+<br>
 
 ## 🏁 Desafio: <a id="desafio"></a>
 
 O desafio propõe o desenvolvimento de um sistema para gerenciamento de regras de negócio, utilizando técnicas de Engenharia de Software Assistida por Inteligência Artificial.
-<br>
-Empresas possuem regras de negócio que mudam constantemente devido a novos produtos, alterações de preços, campanhas de vendas e mudanças em acordos comerciais com parceiros e fornecedores. Entretanto, essas regras muitas vezes não são registradas ou organizadas adequadamente, dificultando sua utilização, manutenção e rastreabilidade.
 <br>
 Nesse contexto, o sistema deverá permitir registrar, organizar, analisar e simular regras de negócio, reduzindo problemas como inconsistências operacionais, conflitos entre regras, dependência de conhecimento tácito e perda de rastreabilidade.
 
@@ -112,12 +111,8 @@ O cronograma abaixo apresenta visualmente a evolução planejada das principais 
 <a id="demo"></a>
 
 ### • SPRINT 1
-https://github.com/user-attachments/assets/e0fafe44-9b95-4d7e-b080-081ebb5af7cb 
-
 ### • SPRINT 2
-> Em breve!
 ### • SPRINT 3
-> Em breve!
 
 | Sprint   | Entregas | Vídeo do incremento |
 | -------- | -------- | ------------------- |
@@ -268,15 +263,6 @@ docker exec -w /app camplana-frontend sh -c "npx vue-tsc --build && npx vitest r
 cd DomRock-Backend && ./mvnw test
 ```
 
-<!--
-### Limitações conhecidas (Sprint 1)
-
-- Simulação só sobre os meses da base (jul a dez/2025); mês futuro ainda não é aceito.
-- Um tipo de regra: acréscimo de % num período, por marca e cargo, com meta e orçamento.
-- A comissão sem a campanha ainda não aplica proporcional de admissão/demissão nem férias e afastamentos.
-- Sem autenticação, aprovação e persistência de regras e simulações; o histórico do chat fica em memória na Lana e some ao reiniciar o container.
-- O código gerado roda em subprocesso isolado (validação AST, builtins e imports restritos, sem variáveis de ambiente, limites de memória/CPU) dentro do container da Lana; um container efêmero sem rede é a evolução prevista.
--->
 
 ---
 
@@ -302,11 +288,11 @@ Toda a documentação complementar do projeto permanece versionada no diretório
 <td align="center" width="180px"> <img src="https://github.com/luanaapms.png" width="80px" alt="Luana Souza"/><br> <b>Luana Souza</b><br> Scrum Master<br> 
 <a href="https://github.com/luanaapms"> <img src="https://img.shields.io/badge/GitHub-0b192c?style=flat&logo=github&logoColor=white" alt="GitHub"/> </a> </td>
 
-<td align="center" width="180px"> <img src="https://github.com/Doryumi.png" width="80px" alt="Vanessa da Costa"/><br> <b>Vanessa da Costa</b><br> Product Owner<br> <a href="https://github.com/Doryumi"> <img src="https://img.shields.io/badge/GitHub-0b192c?style=flat&logo=github&logoColor=white" alt="GitHub"/> </a> </td>
+<td align="center" width="180px"> <img src="https://github.com/Leonardo-dSouza.png" width="80px" alt="Leonardo Cristiano"/><br> <b>Leonardo Cristiano</b><br> Product Owner <br> <a href="https://github.com/Leonardo-dSouza"> <img src="https://img.shields.io/badge/GitHub-0b192c?style=flat&logo=github&logoColor=white" alt="GitHub"/> </a> </td>
+
+<td align="center" width="180px"> <img src="https://github.com/Doryumi.png" width="80px" alt="Vanessa da Costa"/><br> <b>Vanessa da Costa</b><br> Dev Team <br> <a href="https://github.com/Doryumi"> <img src="https://img.shields.io/badge/GitHub-0b192c?style=flat&logo=github&logoColor=white" alt="GitHub"/> </a> </td>
 
 <td align="center" width="180px"> <img src="https://github.com/henrySilverIX.png" width="80px" alt="Henrique Tadeu"/><br> <b>Henrique Tadeu</b><br> Dev Team<br> <a href="https://github.com/henrySilverIX"> <img src="https://img.shields.io/badge/GitHub-0b192c?style=flat&logo=github&logoColor=white" alt="GitHub"/> </a> </td>
-
-<td align="center" width="180px"> <img src="https://github.com/Leonardo-dSouza.png" width="80px" alt="Leonardo Cristiano"/><br> <b>Leonardo Cristiano</b><br> Dev Team<br> <a href="https://github.com/Leonardo-dSouza"> <img src="https://img.shields.io/badge/GitHub-0b192c?style=flat&logo=github&logoColor=white" alt="GitHub"/> </a> </td>
 
 </tr> 
 <tr> 

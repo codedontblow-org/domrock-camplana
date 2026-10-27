@@ -3,7 +3,13 @@
 ## Documentação — Sprint 2
 
 ## Desafio <a id="desafio"></a>
-Implementar o gerenciamento de usuários, a disponibilização da base de vendas e o fluxo de aprovação de regras e correções cadastrais. A meta é garantir a integridade dos dados, o controle das alterações e o acompanhamento do status das regras, assegurando que sejam validadas antes da execução.
+Implementar o gerenciamento de usuários, a disponibilização da base de vendas e o fluxo de aprovação de regras e correções cadastrais. 
+<br>
+Meta da Sprint: garantir o controle das alterações de gerenciamento, acompanhamento do status das regras e aprovação de campanhas, assegurando que sejam validadas antes da execução.
+
+| Capacidade estimada | Meta da Sprint |  Previsão das Sprints (extras) | 
+| :--: | :--------: | :--- |
+| 32 | User stories de rank 6, 7, 8, 9, 10 |  User story de rank 11 | 
 
 ## Backlog da Sprint
 
@@ -11,11 +17,11 @@ Implementar o gerenciamento de usuários, a disponibilização da base de vendas
 
 | Rank | Prioridade | User Story | Estimativa | Sprint |
 | :--: | :--------: | :--- | :--------: | :-----: |
-| 1 | Alta | Como Supervisor de Vendas quero avaliar e aprovar ou reprovar com justificativa as regras de negócio criadas por outros usuários, para garantir que estejam alinhadas ao orçamento e aos objetivos da campanha antes serem executadas. | 8 | 2 |
-| 2 | Alta | Como Administrador do Sistema, quero poder criar, editar e excluir usuários para gerenciar quem usa o sistema. | 3 | 2 |
-| 3 | Alta | Como Gerente de Vendas, quero que o sistema disponha da base de vendas, metas e vendedores do período, para que a simulação tenha dados sobre os quais calcular. | 8 | 2 |
-| 4 | Alta | Como Supervisor de Vendas, quero propor correções pontuais na base cadastral e submetê-las ao mesmo fluxo de aprovação, para manter a base íntegra caso haja necessidade.| 8 | 2 |
-| 5 | Alta |Como Usuário Autenticado, quero ver o status da minha regra (rascunho, em simulação, aguardando aprovação, aprovada, arquivada), para acompanhar em que etapa ela está. | 5 | 2 |
+| 6 | Alta | Como Supervisor de Vendas quero avaliar e aprovar ou reprovar com justificativa as regras de negócio criadas por outros usuários, para garantir que estejam alinhadas ao orçamento e aos objetivos da campanha antes serem executadas. | 8 | 2 |
+| 7 | Alta | Como Administrador do Sistema, quero poder criar, editar e excluir usuários para gerenciar quem usa o sistema. | 3 | 2 |
+| 8 | Alta | Como Gerente de Vendas, quero que o sistema disponha da base de vendas, metas e vendedores do período, para que a simulação tenha dados sobre os quais calcular. | 8 | 2 |
+| 9 | Alta | Como Supervisor de Vendas, quero propor correções pontuais na base cadastral e submetê-las ao mesmo fluxo de aprovação, para manter a base íntegra caso haja necessidade.| 8 | 2 |
+| 10 | Alta |Como Usuário Autenticado, quero ver o status da minha regra (rascunho, em simulação, aguardando aprovação, aprovada, arquivada), para acompanhar em que etapa ela está. | 5 | 2 |
 
 ## 🏅 DoR — Definition of Ready <a id="dor"></a>
 
@@ -58,8 +64,16 @@ Critérios utilizados para verificar se uma história foi desenvolvida, testada 
 <div align="center"> 
 <table>
   <tr>
-<th> <img src = "docs\prototipo\tela-3.png"> </th>
-<th> <img src = "docs\prototipo\tela-4.png"> </th>
-</tr> 
+<th> <img src = "../../prototipo/tela-3.png"> </th>
+<th> <img src = "../../prototipo/tela-4.png"> </th>
+</tr>
+  <tr>
+<th> <img src = "../../prototipo/tela-5.png"> </th>
+<th> <img src = "../../prototipo/tela-6.png"> </th>
+</tr>
+  <tr>
+<th> <img src = "../../prototipo/tela-7.png"> </th>
+<th> <img src = "../../prototipo/tela-8.png"> </th>
+</tr>
 </table> 
 </div>
