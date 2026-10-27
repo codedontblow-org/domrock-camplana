@@ -66,18 +66,18 @@ A simulação é um _backtest_: aplica a regra sobre vendas que já aconteceram 
 | 6 | Alta | Como Supervisor de Vendas quero avaliar e aprovar ou reprovar com justificativa as regras de negócio criadas por outros usuários, para garantir que estejam alinhadas ao orçamento e aos objetivos da campanha antes serem executadas. | 8 | 2 | ✅ |
 | 7 | Alta | Como Administrador do Sistema, quero poder criar, editar e excluir usuários para gerenciar quem usa o sistema. | 3 | 2 |✅  |
 | 8 | Alta | Como Gerente de Vendas, quero que o sistema disponha da base de vendas, metas e vendedores do período, para que a simulação tenha dados sobre os quais calcular. | 8 | 2 | ✅ |
-| 9 | Alta | Como Supervisor de Vendas, quero propor correções pontuais na base cadastral e submetê-las ao mesmo fluxo de aprovação, para manter a base íntegra caso haja necessidade. | 8 | 2 | ✅ |
+| 9 | Alta | Como Supervisor de Vendas, quero propor correções pontuais na base cadastral e submetê-las ao mesmo fluxo de aprovação, para manter a base íntegra caso haja necessidade. | 8 | 2 | 🚧 |
 | 10 | Média | Como Usuário Autenticado, quero ver o status da minha regra (rascunho, em simulação, aguardando aprovação, aprovada, arquivada), para acompanhar em que etapa ela está. | 5 | 2 | ✅ |
 | 11 | Média | Como Supervisor de Vendas, quero ser notificado quando uma regra ou uma correção na base cadastral for submetida para aprovação, para avaliá-la sem depender de checar o sistema manualmente e não atrasar o início da campanha. | 8 | 3 |  |
 | 12 | Alta | Como Supervisor de Vendas, quero um relatório com gráficos do resultado da apuração do comissionamento ao final da campanha, para visualizar o impacto financeiro real e comparar com o simulado. | 13 | 3 |  |
 | 13 | Alta | Como Supervisor de Vendas, quero que o sistema sinalize automaticamente valores de comissionamento com desvio relevante em relação à média histórica (ex: vendas muito acima do esperado), para que eu possa analisar possíveis inconsistências. | 13 | 3 |  |
-| 14 | Alta | Como Supervisor de Vendas, quero poder visualizar os logs de edições e aprovações, para acompanhar o histórico de mudanças e garantir rastreabilidade | 8 | 3 |  |
-| 15 | Alta | Como Supervisor de Vendas, quero visualizar o passo a passo de como o sistema interpretou o comando e chegou ao resultado da simulação de uma regra, para entender e confiar na decisão (explicabilidade/XAI). | 13 | 3 |  |
-| 16 | Média | Como Supervisor de Vendas, quero visualizar as campanhas já realizadas, em andamento e previstas, para gerenciamento. | 5 | 3 |  |
+| 14 | Alta | Como Supervisor de Vendas, quero poder visualizar os logs de edições e aprovações, para acompanhar o histórico de mudanças e garantir rastreabilidade | 8 | 3 | 🚧 |
+| 15 | Alta | Como Supervisor de Vendas, quero visualizar o passo a passo de como o sistema interpretou o comando e chegou ao resultado da simulação de uma regra, para entender e confiar na decisão (explicabilidade/XAI). | 13 | 3 | 🚧 |
+| 16 | Média | Como Supervisor de Vendas, quero visualizar as campanhas já realizadas, em andamento e previstas, para gerenciamento. | 5 | 3 | 🚧 |
 | 17 | Média | Como Gerente e/ou Supervisor, quero visualizar meu perfil e editar meus dados pessoais para manter minhas informações atualizadas. | 3 | 3 |  |
 | 18 | Baixa | Como Supervisor de Vendas, quero insights automáticos sobre o resultado da campanha, para identificar rapidamente o que mais influenciou o custo. | 3 | 3 |  |
 
-<!--Status: ✅ ❌ --->
+<!--Status: ✅ 🚧 (parcial) ❌ --->
 
 **Perfis:** o **Gerente de Vendas** cria regras e solicita mudanças; o **Supervisor de Vendas** cria e aprova regras e mudanças; o **Administrador** apenas gerencia usuários, sem acesso a simulações, edições ou aprovações.
 
@@ -102,7 +102,7 @@ A simulação é um _backtest_: aplica a regra sobre vendas que já aconteceram 
 
 O cronograma abaixo apresenta visualmente a evolução planejada das principais entregas.
 
-<img src = "assets\Roadmap.png"> 
+<img src = "assets/Roadmap.png"> 
 
 ---
 <!--
@@ -135,8 +135,10 @@ O cronograma abaixo apresenta visualmente a evolução planejada das principais 
 ![Docker](https://img.shields.io/badge/Docker-00b4f1?style=for-the-badge&logo=docker&logoColor=white)
 ![Python](https://img.shields.io/badge/python-00b4f1.svg?style=for-the-badge&logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/fastapi-00b4f1.svg?style=for-the-badge&logo=fastapi&logoColor=white)
+![gRPC](https://img.shields.io/badge/gRPC-00b4f1?style=for-the-badge&logo=grpc&logoColor=white)
 ![LangGraph](https://img.shields.io/badge/langgraph-00b4f1?style=for-the-badge&logo=langgraph&logoColor=white)
 ![OpenRouter](https://img.shields.io/badge/OpenRouter-00b4f1?style=for-the-badge&logo=openrouter&logoColor=white)
+![Groq](https://img.shields.io/badge/Groq-00b4f1?style=for-the-badge&logo=groq&logoColor=white)
 ![Gemini](https://img.shields.io/badge/Gemini-00b4f1?style=for-the-badge&logo=googlegemini&logoColor=white)
 ![Jira](https://img.shields.io/badge/jira-00b4f1.svg?style=for-the-badge&logo=jira&logoColor=white)
 ![Figma](https://img.shields.io/badge/figma-00b4f1.svg?style=for-the-badge&logo=figma&logoColor=white)
@@ -147,17 +149,22 @@ O cronograma abaixo apresenta visualmente a evolução planejada das principais 
 
 ## 📂 Estrutura do Projeto <a id="estrutura"></a>
 
-Este repositório reúne os três serviços como **submódulos Git**, apontando para a branch de integração da Sprint 1 (`feature/implementacao-do-fluxo-completo`, definida no `.gitmodules`).
+Este repositório reúne os três serviços como **submódulos Git**, apontando para a branch de integração (`develop`, definida no `.gitmodules`).
 
 ```text
 domrock-camplana/
+├── assets/                # imagens do README, roadmap
 ├── DomRock-Frontend/      # submódulo: chat, painel da campanha e resultado (Vue 3 + Vite + Pinia)
 ├── DomRock-Backend/       # submódulo: API, importação das bases, usuários (Spring Boot 4 + PostgreSQL)
 │   └── docs/domrock-dataset/   # planilhas da Dom Rock (RH, vendas e % de comissão, jul-dez/2025)
 ├── DomRock-Lana/          # submódulo: agente, geração/execução do código e simulação (FastAPI + LangGraph)
 ├── docs/                  # arquitetura, DoR/DoD, estratégia de branch, padrão de commit e manuais
 ├── scripts/
-│   └── importar-dataset.sh     # carrega as bases no banco pelo backend
+│   ├── importar-dataset.sh         # carrega as bases no banco pelo backend
+│   ├── importar-intercorrencias.sh # aplica intercorrências de RH no banco e gera relatório de pendências
+│   ├── intercorrencias.sql         # comandos SQL e regras de classificação das intercorrências de RH
+│   ├── seed-demo.sh               # prepara o banco com dataset e histórico de campanhas para demo
+│   └── seed-demo.sql              # seed SQL com campanhas, simulações e logs para demonstração
 ├── docker-compose.yml     # sobe PostgreSQL, backend, Lana e frontend
 ├── .env.example           # variáveis (chaves de IA, portas)
 ├── README.md
@@ -169,14 +176,16 @@ domrock-camplana/
 ```text
 Navegador ──> Frontend (Vite, proxy /backend) ──> Backend Spring (/api/chat, /api/simulacoes)
                                                        │
-                                                       ▼
-                                   Lana FastAPI (/agent/invoke, /simulacao) ──> PostgreSQL
-                                                       │                       (papel somente leitura)
-                                                       ▼
-                                   Código Python da regra em subprocesso isolado
+                           ┌───────────────────────────┴───────────────────────────┐
+                           │ gRPC (50051: IAService)       HTTP (8000: /simulacao) │
+                           ▼                                                       ▼
+                                      Lana (FastAPI + gRPC) ──> PostgreSQL
+                                                 │              (papel somente leitura)
+                                                 ▼
+                             Código Python da regra em subprocesso isolado
 ```
 
-O backend é a porta de entrada: repassa o chat e a simulação para a Lana por HTTP. A Lana consulta o banco com um papel somente leitura (`lana_leitura`), com guarda de SQL e limite de linhas. A documentação detalhada está em [Documentação de Arquitetura](docs/arquitetura.md).
+O backend é a porta de entrada única da aplicação e exige autenticação via login (JWT). Ele repassa as mensagens do chat para a Lana via gRPC (porta 50051, serviço `IAService/InvokeAgent`) e as requisições de simulação via HTTP (porta 8000, `POST /simulacao`). A Lana consulta o banco com um papel somente leitura (`lana_leitura`), com guarda de SQL e limite de linhas. A documentação detalhada está em [Documentação de Arquitetura](docs/arquitetura.md).
 
 # ⚙️ Como Executar? <a id="como-executar"></a>
 
@@ -193,7 +202,7 @@ Não é preciso instalar Java, Node ou Python: tudo roda em containers.
 ```bash
 git clone --recurse-submodules https://github.com/codedontblow-org/domrock-camplana
 cd domrock-camplana
-git submodule update --init --remote   # garante a branch feature/implementacao-do-fluxo-completo
+git submodule update --init --remote   # garante a branch develop
 ```
 
 Para atualizar depois (novos commits na branch): `git submodule update --remote`.
@@ -214,6 +223,8 @@ cp .env.example .env
 | `AI_TIMEOUT_S` | `30` | Segundos por modelo antes de passar ao próximo |
 | `DB_USERNAME` / `DB_PASSWORD` | `postgres` / `postgres` | Banco local |
 | `LANA_DB_PASSWORD` | `lana_leitura` | Senha do papel somente leitura da Lana (criado pelo Flyway) |
+| `JWT_SECRET` | `camplana-segredo-jwt-desenvolvimento-sprint-2-2026` | Chave secreta para assinatura dos tokens JWT da API |
+| `GRPC_LANA_HOST` / `GRPC_LANA_PORT` | `lana` / `50051` | Host e porta do serviço gRPC da Lana (comunicação backend -> Lana) |
 
 ### 3. Subir tudo
 
@@ -233,12 +244,26 @@ Pode rodar logo depois do `docker compose up`: o script espera o backend termina
 
 | Serviço | Endereço |
 | --- | --- |
-| Aplicação (chat) | http://localhost:5173/chat |
+| Aplicação | http://localhost:5173 (sem login redireciona para `/login`) |
 | Backend (Spring) | http://localhost:8080 |
 | Lana (FastAPI, Swagger em `/docs`) | http://localhost:8000/docs |
+| Lana (gRPC) | `localhost:50051` |
 | PostgreSQL | `localhost:5432` |
 
-Se alguma porta já estiver em uso, troque no `.env` (`FRONTEND_HOST_PORT`, `BACKEND_HOST_PORT`, `LANA_HOST_PORT`, `POSTGRES_HOST_PORT`).
+Se alguma porta já estiver em uso, troque no `.env` (`FRONTEND_HOST_PORT`, `BACKEND_HOST_PORT`, `LANA_HOST_PORT`, `LANA_GRPC_HOST_PORT`, `POSTGRES_HOST_PORT`).
+
+#### Primeiro acesso
+
+O acesso ao sistema exige autenticação (JWT). Os usuários iniciais são criados automaticamente pela migração Flyway do backend (`V4__add_ativo_e_seed_usuarios.sql`), todos com a senha padrão `123456`:
+
+- **Administrador (`ADMIN`):** `ana@camplana.com.br` — gestão de usuários em `/admin`;
+- **Gerente de Vendas (`GERENTE`):** `gabriela@camplana.com.br` — criação e simulação de regras;
+- **Supervisor de Vendas (`SUPERVISOR`):** `sergio@camplana.com.br` e `silvia@camplana.com.br` — aprovação e simulação de regras, importação de bases.
+
+*(Opcional)* Para popular o banco com campanhas, simulações e histórico para demonstração, execute:
+```bash
+./scripts/seed-demo.sh
+```
 
 ### Regras para testar
 
