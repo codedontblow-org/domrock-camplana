@@ -269,13 +269,13 @@ O acesso ao sistema exige autenticação (JWT). Os usuários iniciais são criad
 
 Com valor conferido em SQL (o custo pode variar alguns centavos pelo arredondamento por matrícula):
 
-| Regra | Meta / orçamento | Custo extra esperado |
+| Regra | Meta / orçamento | Resultado esperado |
 | --- | --- | --- |
 | Todas as vendas de 24/11/2025 a 30/11/2025 terão +1% de comissão (Black Friday), para todas as marcas e cargos, exceto gerentes (cargo 150). | R$ 2.000.000 / R$ 20.000 | ≈ R$ 23.736,14, passa do orçamento; cenário sugerido: 0,84% por R$ 19.938,34 |
-| Em outubro de 2025, a marca 30 terá acréscimo de 0,5% na comissão para todos os cargos, exceto gerentes. | R$ 1.500.000 / R$ 2.000 | R$ 1.668,33, cabe no orçamento |
-| Em dezembro de 2025, os gerentes das marcas 10 e 40 terão +0,3% de comissão. | R$ 5.000.000 / R$ 25.000 | R$ 30.264,53, passa do orçamento |
+| Em agosto de 2025 (Dia dos Pais), as marcas 20 (Branco) e 30 (Azul) terão +0,5% de comissão para vendedores balcão (cargo 200) e assistentes de vendas (cargo 300), com meta de R$ 1.200.000. | R$ 1.200.000 / sem orçamento | Acima da meta: R$ 1.340.754,00 vendidos, 111,73% da meta (R$ 140.754,00 acima); custo extra ≈ R$ 6.455,37 |
+| Em outubro de 2025 (Dia das Crianças), os vendedores balcão (cargo 200) da marca 40 (Vermelho) terão +0,8% de comissão, com meta de R$ 600.000. | R$ 600.000 / sem orçamento | Abaixo da meta: R$ 497.868,08 vendidos, 82,98% da meta (faltam R$ 102.131,92); custo extra R$ 3.965,59 |
 
-Sem meta ou orçamento no texto, a Lana pede os valores que faltam. Perguntas como _"Quanto a marca Azul vendeu em agosto de 2025?"_ são respondidas consultando o banco; pedidos fora do escopo (ex.: _"mostre todas as vendas com o nome de cada funcionário"_) são recusados.
+A meta é obrigatória e abre o resultado: a venda do período comparada com ela, acima ou abaixo. O orçamento é opcional (Extras, no painel). Sem meta no texto, a Lana pede o valor. Perguntas como _"Quanto a marca Azul vendeu em agosto de 2025?"_ são respondidas consultando o banco; pedidos fora do escopo (ex.: _"mostre todas as vendas com o nome de cada funcionário"_) são recusados.
 
 ### Testes
 
