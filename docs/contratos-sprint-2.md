@@ -308,7 +308,7 @@ Os campos novos **se somam** ao resultado atual: nenhum campo existente some ou 
 | `impacto` | pessoas impactadas e acréscimos |
 | `cenarios` | variações já calculadas (`ajustar_acrescimo`, `sem_marca`) |
 | `ressalvas`, `explicacao`, `observacao` | textos |
-| `codigo`, `origem_codigo`, `tentativas` | código gerado (o front mostra `codigo` só para SUPERVISOR, A6-71) |
+| `codigo`, `origem_codigo`, `tentativas` | código gerado. O backend guarda `codigo`, mas o front não o mostra a nenhum perfil (decisão do PO, 26/10, A6-92; antes era só para SUPERVISOR, A6-71) |
 
 O que muda:
 
@@ -480,6 +480,8 @@ O que muda:
 
 O histórico **não** vem do front: o backend lê a conversa gravada no banco (A6-65) e envia o histórico à Lana (3.3).
 
+O backend grava a mensagem do usuário e a resposta da Lana **juntas, numa transação, depois que a Lana responde**. Se a Lana falhar (502, 503 ou 504), nada é gravado: o front mostra o erro e o usuário pode reenviar o texto. Assim a conversa gravada nunca tem pergunta sem resposta (decisão do PO, 26/10).
+
 **Response (200 OK):**
 ```json
 {
@@ -566,7 +568,11 @@ Quem pode: o dono da conversa e, se a conversa é de uma campanha com versão su
 | `simulacao_id` | Só em `SIMULACAO`: o resultado está em `GET /api/simulacoes/{id}` (4.2) |
 | `campanha_id` | `null` enquanto a conversa não foi salva como campanha |
 
-Textos das mensagens de status: "Enviado para análise — v1", "Aprovado por Sílvia — v1", "Reprovado por Sérgio: {justificativa}", "Voltou para rascunho — a próxima submissão será a v2", "Arquivada".
+Textos das mensagens de status: "Enviado para análise — v1", "Aprovado por Sílvia — v1", "Reprovado por Sérgio: {justificativa}", "Voltou para rascunho — a próxima submissão será a v2", "Arquivada". O backend grava o texto pronto, com o nome de quem decidiu naquele momento; a leitura não monta o texto de novo (decisão do PO, 26/10).
+
+Mensagem `SIMULACAO`: uma para cada simulação `CONCLUIDA` da conversa, gravada quando o job da simulação (4) termina. Simulação com `ERRO` não gera mensagem (decisão do PO, 26/10).
+
+Na tela (A6-92): a conversa reabre pelo card da campanha (`/chat?campanha={id}`). Só o autor edita, com a campanha em `RASCUNHO`; em `REPROVADA`, a ação `EDITAR` (5.7) volta para rascunho e libera o chat. Nos outros casos, e para o Supervisor, é somente leitura. O front guarda o `chat_id` aberto no `localStorage` para um F5 voltar à mesma conversa. Não há lista de conversas sem campanha.
 
 ### 3.3. Backend → Lana (gRPC `InvokeAgent`)
 
@@ -596,12 +602,16 @@ Exemplo de `historico_json`:
 ```json
 [
   { "papel": "usuario", "texto": "Quero +1% para todas as marcas de 24 a 30/11, exceto gerentes, com meta de 2 milhões" },
-  { "papel": "lana", "texto": "Preenchi a ficha: +1% de 24/11 a 30/11/2025, todas as marcas, exceto gerentes. Confira no painel e clique em Simular." },
+  { "papel": "lana", "texto": "Preenchi a ficha: +1% de 24/11 a 30/11/2025, todas as marcas, exceto gerentes. Confira no painel e clique em Simular.",
+    "trilha": null, "regra": "<Regra 2.1>" },
   { "papel": "sistema", "texto": "Reprovado por Sérgio: a meta de R$ 2 milhões está abaixo da venda real do período (R$ 2,4 milhões)" }
 ]
 ```
 
 - Vem em ordem e sem a mensagem atual (que vai em `prompt`). As mensagens de sistema entram para a Lana saber, por exemplo, que a campanha foi reprovada e por quê.
+- Cada item `lana` leva a `trilha` (2.2) daquela resposta, ou `null`. Itens `usuario` e `sistema` levam só `papel` e `texto`. Hoje o `InMemorySaver` guarda o resultado de cada consulta, e a Lana usa esses textos para conferir a fonte dos valores em reais (`conferir_fonte_dos_valores`). Sem ele, os `dados` das trilhas fazem esse papel: um valor citado no turno 11 que veio de uma consulta do turno 3 continua com fonte, sem consultar o banco de novo (decisão do PO, 26/10).
+- Cada item `lana` também leva a `regra` (2.1) que aquela resposta devolveu, ou `null`. Os valores das fichas anteriores contam como conhecidos na mesma conferência, como já acontecia com o `InMemorySaver`: uma meta definida no turno 5 continua com fonte depois, mesmo que o painel atual já não a tenha (decisão do PO, 27/10).
+- Sem limite de tamanho nesta sprint: o histórico vai inteiro.
 - A Lana não guarda estado: monta o contexto só com o histórico recebido. O `InMemorySaver` sai.
 - O backend monta a resposta do chat (3.1) a partir do `InvokeResponse`: `resposta` → `response`, `events_json` → `events`, `regra_json` → `regra`, `trilha_json` → `trilha`. Com `solicitacao_json` preenchido, o backend cria a correção (6.1) e a devolve em `solicitacao`.
 - O `POST /agent/invoke` em HTTP da Lana continua existindo (Sprint 1), mas o backend não usa mais.
@@ -1177,3 +1187,4 @@ Quando uma campanha ou correção é submetida, cada Supervisor **ativo**, menos
 - 21/10/2026, Leonardo: pente fino de arquitetura. Entram os princípios (front burro, permissão por perfil só no `SecurityConfig`, números só da Lana), `acoes` na campanha e na versão, as filas em rota própria (`/api/campanhas/fila` e `/api/correcoes/fila`), o filtro padrão de "minhas campanhas" e as regras do submeter; o `campanha_id` sai do pedido de simulação.
 - 24/10/2026, Leonardo: o 4.2 passa a listar a `ficha` na resposta e as etapas de erro do próprio backend, como entraram na A6-66.
 - 24/10/2026, Leonardo: a trilha (2.2) ganha `campanhas` (A6-74); o 4.3 diz de onde a Lana tira as campanhas da especificação.
+- 27/10/2026, Leonardo: 3.1 a 3.3 com as decisões do PO para a A6-65 (gravação numa transação depois da resposta da Lana, textos das mensagens de sistema e a `SIMULACAO`, `trilha` e `regra` nos itens `lana` do histórico) e para a A6-92 (reabrir a conversa pelo card; o front não mostra o `codigo`).
