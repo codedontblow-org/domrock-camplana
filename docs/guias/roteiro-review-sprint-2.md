@@ -43,7 +43,7 @@ Todas as senhas dos usuários de demonstração são: **`123456`**.
      > *"Esta campanha foi criada e simulada, mas ainda não foi enviada para aprovação. O autor pode renomeá-la, arquivá-la ou submetê-la."*
    - **`AGUARDANDO_APROVACAO` ("Campanha Virada de Novembro"):**
      > *"Submetida pela Gabriela. A versão v1 foi congelada com a ficha de parâmetros e o resultado exato daquele momento, e está aguardando avaliação da supervisão."*
-   - **`APROVADA` ("Black Friday 2025 - Aprovada" e "Campanha de Inverno - Julho 2025"):**
+   - **`APROVADA` ("Black Friday 2025" e "Campanha de Inverno - Julho 2025"):**
      > *"Campanhas já avaliadas e aprovadas, prontas para vigência."*
    - **`REPROVADA` ("Acréscimo de Agosto - Reprovada"):**
      > *"Foi reprovada pelo supervisor Sérgio. Veja que o botão 'Editar' permite que a Gabriela devolva a campanha para Rascunho e elabore a versão v2 corrigida."*
@@ -52,7 +52,7 @@ Todas as senhas dos usuários de demonstração são: **`123456`**.
    - Clique no filtro **Arquivada**: a campanha *"Incentivo Setembro - Arquivada"* é exibida (submetida, reprovada pela Sílvia com justificativa e arquivada pela Gabriela).
 
 ### 1.3 Detalhes da Campanha e Trilha de Números ("De onde vieram esses números?")
-1. Clique na **"Black Friday 2025 - Aprovada"** ou na **"Campanha Virada de Novembro"**.
+1. Clique na **"Black Friday 2025"** ou na **"Campanha Virada de Novembro"**.
 2. Mostre os cartões de resultado:
    - **Meta:** valor estipulado vs. vendas apuradas no histórico, percentual de atingimento e superação;
    - **Custo Adicional:** impacto financeiro líquido estimado da campanha;
