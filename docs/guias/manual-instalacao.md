@@ -137,7 +137,7 @@ Acompanhe os logs dos containers:
 docker compose logs -f
 ```
 
-Aguarde o Spring Boot aplicar as migrações Flyway (V1 a V9) e a Lana iniciar o servidor gRPC na porta 50051.
+Aguarde o Spring Boot aplicar as migrações Flyway (V1 a V10) e a Lana iniciar o servidor gRPC na porta 50051.
 
 ---
 
