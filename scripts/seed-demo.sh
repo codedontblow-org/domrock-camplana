@@ -79,7 +79,7 @@ fi
 # ON_ERROR_STOP: sem ele o psql sai com 0 mesmo quando a transação cai em ROLLBACK.
 "${COMPOSE[@]}" exec -T postgres psql -v ON_ERROR_STOP=1 -U "${DB_USERNAME:-postgres}" -d "${POSTGRES_DB:-camplana}" < "$SCRIPT_DIR/seed-demo.sql"
 
-echo "Seed SQL aplicado com sucesso!"
+echo "Seed SQL aplicado com sucesso! (9 campanhas e histórico completo de mensagens de chat)"
 
 echo ""
 echo "============================================================"
